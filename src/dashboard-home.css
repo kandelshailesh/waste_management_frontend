@@ -1,0 +1,51 @@
+.trigger {
+  /* padding: 0 24px; */
+  font-size: 18px;
+  line-height: 64px;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.trigger:hover {
+  color: #1890ff;
+}
+
+.logo {
+  height: 32px;
+  width: 100px;
+  background: rgba(255, 255, 255, 0.3);
+  background: red;
+  /* z-index: 2; */
+  /* border: 2px solid red; */
+  /* padding: 2px; */
+}
+
+.site-layout .site-layout-background {
+  background: #fff;
+}
+
+.modified-ant-layout-header {
+  padding-left: 0px;
+}
+
+/* .remove-hoaver-effect:hover {
+  border-bottom: 2px solid transparent !important;
+  color: inherit !important;
+} */
+/* .remove-ant-menu-item:hover {
+  background-color: inherit !important;
+} */
+
+.logo-img {
+  height: 50px;
+  width: auto;
+  border: 1px solid white;
+  background-color: white;
+}
+
+.site-layout-background ul {
+  display: flex;
+}
+.site-layout-background > ul:last-child {
+  margin-left: 30px;
+}
