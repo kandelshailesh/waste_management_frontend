@@ -73,7 +73,7 @@ class DashboardHome extends React.Component {
     } else if (actives == "Brand") {
       activeComponentData = <Brand />;
     } else {
-      activeComponentData = "";
+      activeComponentData = " ";
     }
 
     // {

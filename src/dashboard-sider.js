@@ -63,9 +63,9 @@ class DashboardSider extends React.Component {
           <Menu.Item key="3" icon={<CarryOutOutlined />}>
             <Link
               to="#"
-              onClick={(e) => this.props.activeComponent("addProduct")}
+              onClick={(e) => this.props.activeComponent("employees")}
             >
-              Employee
+              Employees
             </Link>
           </Menu.Item>
           {/* </SubMenu> */}
