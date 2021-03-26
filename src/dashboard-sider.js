@@ -18,6 +18,7 @@ import {
   CarryOutOutlined,
 } from "@ant-design/icons";
 import "./dashboard-home.css";
+import { menu_list } from "./menu_list";
 
 const { Search } = Input;
 const { Header, Sider, Content, Footer } = Layout;
@@ -46,70 +47,35 @@ class DashboardSider extends React.Component {
         style={{ top: "62px" }}
       >
         <Menu theme="dark" defaultSelectedKeys={["1"]} mode="inline">
-          <Menu.Item key="1" icon={<PieChartOutlined />}>
-            <Link
-              to="#"
-              onClick={(e) => this.props.activeComponent("PieChartOne")}
-            >
-              Dashboard
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="12" icon={<TeamOutlined />}>
-            <Link to="#" onClick={(e) => this.props.activeComponent("users")}>
-              Users
-            </Link>
-          </Menu.Item>
-          {/* <SubMenu key="sub1" icon={<UserOutlined />} title="Products"> */}
-          <Menu.Item key="3" icon={<CarryOutOutlined />}>
-            <Link
-              to="#"
-              onClick={(e) => this.props.activeComponent("employees")}
-            >
-              Employees
-            </Link>
-          </Menu.Item>
-          {/* </SubMenu> */}
-          <Menu.Item key="33" icon={<BarsOutlined />}>
-            <Link to="#" onClick={(e) => this.props.activeComponent("orders")}>
-              Complaints
-            </Link>
-          </Menu.Item>
-          {/* <SubMenu key="sub2" icon={<BarsOutlined />} title="Orders">
-            <Menu.Item key="6">
-              <Link
-                to="#"
-                onClick={(e) => this.props.activeComponent("orders")}
-              >
-                view orders
-              </Link>
-            </Menu.Item>
-            <Menu.Item key="7">option</Menu.Item>
-          </SubMenu> */}
-          <SubMenu key="sub3" icon={<PlusOutlined />} title="create">
-            <Menu.Item key="9">
-              <Link
-                to="#"
-                onClick={(e) => this.props.activeComponent("Category")}
-              >
-                Category
-              </Link>
-            </Menu.Item>
-
-            <Menu.Item key="10">
-              <Link
-                to="#"
-                onClick={(e) => this.props.activeComponent("Subcategory")}
-              >
-                Subcategory
-              </Link>
-            </Menu.Item>
-
-            <Menu.Item key="11">
-              <Link to="#" onClick={(e) => this.props.activeComponent("Brand")}>
-                Brand
-              </Link>
-            </Menu.Item>
-          </SubMenu>
+          {menu_list.map((result, i) => {
+            return result.type === "menu" ? (
+              <Menu.Item key={result.key} icon={result.icon}>
+                <Link
+                  to="#"
+                  onClick={(e) => this.props.activeComponent(result.component)}
+                >
+                  {result.label}
+                </Link>
+              </Menu.Item>
+            ) : (
+              <SubMenu key={result.key} icon={result.icon} title={result.title}>
+                {result.submenu_item.map((res, i) => {
+                  return (
+                    <Menu.Item key={res.key}>
+                      <Link
+                        to="#"
+                        onClick={(e) =>
+                          this.props.activeComponent(res.component)
+                        }
+                      >
+                        {res.label}
+                      </Link>
+                    </Menu.Item>
+                  );
+                })}
+              </SubMenu>
+            );
+          })}
         </Menu>
       </Sider>
     );

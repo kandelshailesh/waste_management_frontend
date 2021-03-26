@@ -148,7 +148,7 @@ class Users extends React.Component {
           dataSource={data}
         />
         <Drawer
-          title="Add Product"
+          title="Add User"
           width={400}
           onClose={this.onClose}
           visible={this.state.visible}

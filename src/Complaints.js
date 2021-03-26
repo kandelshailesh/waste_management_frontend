@@ -100,7 +100,7 @@ const data = [
   },
 ];
 
-class Employees extends React.Component {
+class Complaints extends React.Component {
   state = {
     fileList: [
       {
@@ -137,7 +137,7 @@ class Employees extends React.Component {
     return (
       <>
         <Button type="primary" onClick={this.showDrawer}>
-          <PlusOutlined /> Add Employees
+          <PlusOutlined /> Add Complaint
         </Button>
         <Space></Space>
         {/* table component */}
@@ -292,4 +292,4 @@ class Employees extends React.Component {
   }
 }
 
-export default Employees;
+export default Complaints;

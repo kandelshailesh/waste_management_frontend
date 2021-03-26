@@ -17,6 +17,12 @@ import Category from "./Category";
 import Subcategory from "./subcategory";
 import Users from "./Users";
 import Brand from "./Brand";
+import Employees from "./Employees";
+import Complaints from "./Complaints";
+import Events from "./Events";
+import Packages from "./Packages";
+import Blogs from "./Blogs";
+import Subscriptions from "./Subscriptions";
 
 const { Search } = Input;
 const { Header, Sider, Content, Footer } = Layout;
@@ -72,6 +78,18 @@ class DashboardHome extends React.Component {
       activeComponentData = <Users />;
     } else if (actives == "Brand") {
       activeComponentData = <Brand />;
+    } else if (actives == "Employees") {
+      activeComponentData = <Employees />;
+    } else if (actives == "Complaints") {
+      activeComponentData = <Complaints />;
+    } else if (actives == "Events") {
+      activeComponentData = <Events />;
+    } else if (actives == "Packages") {
+      activeComponentData = <Packages />;
+    } else if (actives == "Blogs") {
+      activeComponentData = <Blogs />;
+    } else if (actives == "Subscriptions") {
+      activeComponentData = <Subscriptions />;
     } else {
       activeComponentData = " ";
     }
