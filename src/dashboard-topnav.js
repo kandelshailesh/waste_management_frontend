@@ -6,6 +6,8 @@ import { Layout, Menu, Input, Dropdown, Row, Col } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 
 import "./dashboard-home.css";
+import imgOne from "./images/logo192.png";
+import imgTwo from "./images/barista1.jpg";
 
 const { Search } = Input;
 const { Header, Sider, Content, Footer } = Layout;
@@ -44,11 +46,7 @@ class DashboardTopNav extends React.Component {
         <Menu className="remove-hover-effect" theme="dark" mode="horizontal">
           <Menu.Item className="remove-ant-menu-item" key="2">
             {/* <div className="logo" /> */}
-            <img
-              className="logo-img"
-              src={"/assets/img/logo/logo.png"}
-              alt=""
-            />
+            <img className="logo-img" src={imgOne} alt="" />
           </Menu.Item>
 
           <Menu.Item className="rm-ant-menu-item" key="3">

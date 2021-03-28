@@ -27,40 +27,29 @@ const columns = [
   },
 
   {
-    title: "Product Name",
-    dataIndex: "productname",
-    key: "productname",
-    render: (text) => <a>{text}</a>,
+    title: "Title",
+    dataIndex: "title",
+    key: "title",
+    search: true,
+    render: (text) => <span>{text}</span>,
   },
   {
-    title: "Product Id",
-    dataIndex: "productid",
-    key: "productid",
+    title: "Description",
+    dataIndex: "description",
+    key: "description",
+    // render: (text) => <span>{text === null ? '-' : text}</span>,
   },
   {
-    title: "Brand",
-    dataIndex: "brand",
-    key: "brand",
+    title: "Slug",
+    dataIndex: "slug",
+    key: "slug",
+    // render: (text) => <span>{text === null ? '-' : text}</span>,
   },
   {
-    title: "Category",
-    dataIndex: "category",
-    key: "category",
-  },
-  {
-    title: "Subcategory",
-    dataIndex: "subcategory",
-    key: "subcategory",
-  },
-  {
-    title: "rate",
-    dataIndex: "rate",
-    key: "rate",
-  },
-  {
-    title: "Quantity",
-    dataIndex: "quantity",
-    key: "quantity",
+    title: "Author",
+    dataIndex: "author",
+    key: "author",
+    // render: (text) => <span>{text === null ? '-' : text}</span>,
   },
 
   {
@@ -79,24 +68,18 @@ const data = [
   {
     sn: "1",
     key: "1",
-    productname: "dell  laptop",
-    productid: 111,
-    brand: "dell",
-    category: "electronics",
-    subcategory: "computers",
-    rate: 90000,
-    quantity: 12,
+    title: "Delay in waste collection timing",
+    description: "lorem ipsum de",
+    slug: "clean-campaign-nepal.html",
+    author: "john doe",
   },
   {
     sn: "2",
     key: "2",
-    productname: "Jim Green",
-    productid: 222,
-    brand: "dell",
-    category: 42,
-    subcategory: "Le Park",
-    rate: 99000,
-    quantity: 10,
+    title: "Many days gap in between collection  days",
+    description: "lorem ipsum de",
+    slug: "clean-campaign-nepal.html",
+    author: "Tom cruise",
   },
 ];
 
@@ -136,10 +119,7 @@ class Complaints extends React.Component {
 
     return (
       <>
-        <Button type="primary" onClick={this.showDrawer}>
-          <PlusOutlined /> Add Complaint
-        </Button>
-        <Space></Space>
+        <h2 style={{ textAlign: "center" }}>Complaints</h2>
         {/* table component */}
 
         <Table
@@ -147,146 +127,6 @@ class Complaints extends React.Component {
           pagination={{ position: " buttomCenter " }}
           dataSource={data}
         />
-        <Drawer
-          title="Add Product"
-          width={400}
-          onClose={this.onClose}
-          visible={this.state.visible}
-          bodyStyle={{ paddingBottom: 80 }}
-          footer={
-            <div
-              style={{
-                textAlign: "center",
-              }}
-            >
-              <Button onClick={this.onClose} style={{ marginRight: 8 }}>
-                Cancel
-              </Button>
-              <Button onClick={this.onClose} type="primary">
-                Submit
-              </Button>
-            </div>
-          }
-        >
-          <Form layout="vertical" hideRequiredMark>
-            <Row gutter={16}>
-              <Col span={12}>
-                <Form.Item
-                  name="productname"
-                  label="Product Name"
-                  rules={[
-                    { required: true, message: "Please enter product name" },
-                  ]}
-                >
-                  <Input placeholder="Please enter product name" />
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Form.Item name="imagebase" label="Image">
-                  <Upload {...props} fileList={this.state.fileList}>
-                    <Button icon={<UploadOutlined />}>Upload</Button>
-                  </Upload>
-                </Form.Item>
-              </Col>
-            </Row>
-            <Row gutter={16}>
-              <Col span={12}>
-                <Form.Item
-                  name="category"
-                  label="Category"
-                  rules={[
-                    { required: true, message: "Please select an owner" },
-                  ]}
-                >
-                  <Select placeholder="Please select an owner">
-                    <Option value="xiao">Xiaoxiao Fu</Option>
-                    <Option value="mao">Maomao Zhou</Option>
-                  </Select>
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Form.Item
-                  name="subcategory"
-                  label="Subcategory"
-                  rules={[
-                    { required: true, message: "Please select a subcategory" },
-                  ]}
-                >
-                  <Select placeholder="Please choose the type">
-                    <Option value="private">Private</Option>
-                    <Option value="public">Public</Option>
-                  </Select>
-                </Form.Item>
-              </Col>
-            </Row>
-            <Row gutter={16}>
-              <Col span={12}>
-                <Form.Item
-                  name="brand"
-                  label="Brand"
-                  rules={[
-                    { required: true, message: "Please choose the approver" },
-                  ]}
-                >
-                  <Select placeholder="Please choose the approver">
-                    <Option value="jack">Jack Ma</Option>
-                    <Option value="tom">Tom Liu</Option>
-                  </Select>
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Form.Item
-                  name="rate"
-                  label="Rate"
-                  rules={[{ required: true, message: "Please enter rate" }]}
-                >
-                  <Input placeholder="Please enter rate" />
-                </Form.Item>
-              </Col>
-            </Row>
-            <Row gutter={16}>
-              <Col span={12}>
-                <Form.Item
-                  name="quantity"
-                  label="Quantity"
-                  rules={[{ required: true, message: "Please enter quantity" }]}
-                >
-                  <InputNumber min={1} defaultValue={1} />
-                </Form.Item>
-              </Col>
-
-              <Col span={12}>
-                <Form.Item
-                  name="minorder"
-                  label="Min order"
-                  rules={[{ required: true, message: "Please enter rate" }]}
-                >
-                  <InputNumber min={1} defaultValue={1} />
-                </Form.Item>
-              </Col>
-            </Row>
-            <Row gutter={16}>
-              <Col span={24}>
-                <Form.Item
-                  name="description"
-                  label="Description"
-                  noStyle
-                  rules={[
-                    {
-                      required: true,
-                      message: "please enter product description",
-                    },
-                  ]}
-                >
-                  <Input.TextArea
-                    rows={4}
-                    placeholder="please enter product description"
-                  />
-                </Form.Item>
-              </Col>
-            </Row>
-          </Form>
-        </Drawer>
       </>
     );
   }

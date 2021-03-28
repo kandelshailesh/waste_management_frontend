@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
+import { Link } from "react-router-dom";
 import "antd/dist/antd.css";
 
 import {
@@ -14,8 +15,87 @@ import {
   Upload,
   Table,
   Space,
+  Radio,
 } from "antd";
 import { PlusOutlined, UploadOutlined } from "@ant-design/icons";
+import FormGenerator from "./components/FormGenerator";
+import imgOne from "./images/first.jpg";
+import imgTwo from "./images/barista1.jpg";
+const text = "hello";
+const formItems = [
+  {
+    key: "fullName",
+    name: "fullName",
+    label: "Full Name",
+    rules: [{ required: true, message: "Please enter full name" }],
+    type: <Input placeholder="Please enter full name" />,
+  },
+  {
+    key: "userName",
+    name: "userName",
+    label: "Username",
+
+    rules: [{ required: true, message: "Please enter user name" }],
+    type: <Input placeholder="Please enter user name" />,
+  },
+  {
+    key: "email",
+    name: "email",
+    label: "Email",
+
+    rules: [{ required: true, message: "Please enter email" }],
+    type: <Input placeholder="Please enter email " />,
+  },
+  {
+    key: "phone",
+    name: "phone",
+    label: "Phone",
+    rules: [{ required: true, message: "Please enter Phone" }],
+    type: <Input type="text" placeholder="Please enter Phone " />,
+  },
+  {
+    type: (
+      <Radio.Group name="status" defaultValue="active" buttonStyle="solid">
+        <Radio.Button
+        // checked={values.status === "active"}
+        // value="active"
+        >
+          Active
+        </Radio.Button>
+        <Radio.Button
+        //  checked={values.status === "hold"}
+        //  value="hold"
+        >
+          Hold
+        </Radio.Button>
+      </Radio.Group>
+    ),
+    key: "status",
+    label: "Status",
+    // error: errors.status,
+  },
+  {
+    type: (
+      <Radio.Group name="subscribed" defaultValue="false" buttonStyle="solid">
+        <Radio.Button
+        // checked={values.status === "active"}
+        // value="active"
+        >
+          Subscribed
+        </Radio.Button>
+        <Radio.Button
+        //  checked={values.status === "hold"}
+        //  value="hold"
+        >
+          Not subscribed
+        </Radio.Button>
+      </Radio.Group>
+    ),
+    key: "status",
+    label: "Status",
+    // error: errors.status,
+  },
+];
 
 const { Option } = Select;
 
@@ -25,42 +105,69 @@ const columns = [
     dataIndex: "sn",
     key: "sn",
   },
+  // {
+  // title: "Full Name",
+  // dataIndex: "fullName",
+  // key: "fullName",
+  // render: (_, record) => (
+  //   <span>
+  //     {record.firstName !== null ? record.firstName : "-"}&nbsp;
+  //     {record.lastName}
+  //   </span>
+  // ),
+  // },
+  {
+    title: "User Name",
+    dataIndex: "username",
+    key: "username",
+    render: (text) => <span>{text === null ? "-" : text}</span>,
+  },
+  {
+    title: "Email",
+    dataIndex: "email",
+    key: "email",
+    search: true,
+    render: (text) => <span>{text}</span>,
+  },
+  {
+    title: "Phone",
+    dataIndex: "phone",
+    key: "phone",
+    // render: (text) => <span>{text === null ? '-' : text}</span>,
+  },
 
   {
-    title: "Product Name",
-    dataIndex: "productname",
-    key: "productname",
-    render: (text) => <a>{text}</a>,
+    title: "Status",
+    dataIndex: "status",
+    key: "status",
   },
   {
-    title: "Product Id",
-    dataIndex: "productid",
-    key: "productid",
+    title: "Subscribed",
+    dataIndex: "subscribed",
+    key: "subscribed",
   },
   {
-    title: "Brand",
-    dataIndex: "brand",
-    key: "brand",
+    title: "Role",
+    dataIndex: "role",
+    key: "role",
   },
   {
-    title: "Category",
-    dataIndex: "category",
-    key: "category",
-  },
-  {
-    title: "Subcategory",
-    dataIndex: "subcategory",
-    key: "subcategory",
-  },
-  {
-    title: "rate",
-    dataIndex: "rate",
-    key: "rate",
-  },
-  {
-    title: "Quantity",
-    dataIndex: "quantity",
-    key: "quantity",
+    title: "Profile",
+    dataIndex: "profileImage",
+    key: "profileImage",
+    render: (text, record) => (
+      <Link to={`/createuser/edit/${record.id}`} className="thumbnail-area">
+        {/* <div className="image-view"> */}
+
+        <img
+          style={{ width: "55px", height: "auto", objectFit: "contain" }}
+          className="image-view"
+          src={record.profileImage}
+          alt="Profile image"
+        />
+        {/* </div> */}
+      </Link>
+    ),
   },
 
   {
@@ -79,24 +186,25 @@ const data = [
   {
     sn: "1",
     key: "1",
-    productname: "dell  laptop",
-    productid: 111,
-    brand: "dell",
-    category: "electronics",
-    subcategory: "computers",
-    rate: 90000,
-    quantity: 12,
+    // fullName: "ab",
+    username: "John first",
+    email: "ab@gmail.com",
+    phone: "9888888",
+    status: "active",
+    subscribed: "Subscribed",
+    profileImage: imgOne,
+    role: "admin",
   },
   {
     sn: "2",
     key: "2",
-    productname: "Jim Green",
-    productid: 222,
-    brand: "dell",
-    category: 42,
-    subcategory: "Le Park",
-    rate: 99000,
-    quantity: 10,
+    username: "John second",
+    email: "ab@gmail.com",
+    phone: "99999999",
+    status: "Hold",
+    subscribed: "Not Subscribed",
+    profileImage: imgTwo,
+    role: "user",
   },
 ];
 
@@ -147,6 +255,8 @@ class Users extends React.Component {
           pagination={{ position: " buttomCenter " }}
           dataSource={data}
         />
+        {/* <img src={imgOne} /> */}
+        {/* {console.log("image one", imgOne)} */}
         <Drawer
           title="Add User"
           width={400}
@@ -168,124 +278,7 @@ class Users extends React.Component {
             </div>
           }
         >
-          <Form layout="vertical" hideRequiredMark>
-            <Row gutter={16}>
-              <Col span={12}>
-                <Form.Item
-                  name="productname"
-                  label="Product Name"
-                  rules={[
-                    { required: true, message: "Please enter product name" },
-                  ]}
-                >
-                  <Input placeholder="Please enter product name" />
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Form.Item name="imagebase" label="Image">
-                  <Upload {...props} fileList={this.state.fileList}>
-                    <Button icon={<UploadOutlined />}>Upload</Button>
-                  </Upload>
-                </Form.Item>
-              </Col>
-            </Row>
-            <Row gutter={16}>
-              <Col span={12}>
-                <Form.Item
-                  name="category"
-                  label="Category"
-                  rules={[
-                    { required: true, message: "Please select an owner" },
-                  ]}
-                >
-                  <Select placeholder="Please select an owner">
-                    <Option value="xiao">Xiaoxiao Fu</Option>
-                    <Option value="mao">Maomao Zhou</Option>
-                  </Select>
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Form.Item
-                  name="subcategory"
-                  label="Subcategory"
-                  rules={[
-                    { required: true, message: "Please select a subcategory" },
-                  ]}
-                >
-                  <Select placeholder="Please choose the type">
-                    <Option value="private">Private</Option>
-                    <Option value="public">Public</Option>
-                  </Select>
-                </Form.Item>
-              </Col>
-            </Row>
-            <Row gutter={16}>
-              <Col span={12}>
-                <Form.Item
-                  name="brand"
-                  label="Brand"
-                  rules={[
-                    { required: true, message: "Please choose the approver" },
-                  ]}
-                >
-                  <Select placeholder="Please choose the approver">
-                    <Option value="jack">Jack Ma</Option>
-                    <Option value="tom">Tom Liu</Option>
-                  </Select>
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Form.Item
-                  name="rate"
-                  label="Rate"
-                  rules={[{ required: true, message: "Please enter rate" }]}
-                >
-                  <Input placeholder="Please enter rate" />
-                </Form.Item>
-              </Col>
-            </Row>
-            <Row gutter={16}>
-              <Col span={12}>
-                <Form.Item
-                  name="quantity"
-                  label="Quantity"
-                  rules={[{ required: true, message: "Please enter quantity" }]}
-                >
-                  <InputNumber min={1} defaultValue={1} />
-                </Form.Item>
-              </Col>
-
-              <Col span={12}>
-                <Form.Item
-                  name="minorder"
-                  label="Min order"
-                  rules={[{ required: true, message: "Please enter rate" }]}
-                >
-                  <InputNumber min={1} defaultValue={1} />
-                </Form.Item>
-              </Col>
-            </Row>
-            <Row gutter={16}>
-              <Col span={24}>
-                <Form.Item
-                  name="description"
-                  label="Description"
-                  noStyle
-                  rules={[
-                    {
-                      required: true,
-                      message: "please enter product description",
-                    },
-                  ]}
-                >
-                  <Input.TextArea
-                    rows={4}
-                    placeholder="please enter product description"
-                  />
-                </Form.Item>
-              </Col>
-            </Row>
-          </Form>
+          <FormGenerator formItems={formItems} />
         </Drawer>
       </>
     );

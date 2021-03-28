@@ -14,10 +14,58 @@ import {
   Upload,
   Table,
   Space,
+  Radio,
+  DatePicker,
 } from "antd";
+
 import { PlusOutlined, UploadOutlined } from "@ant-design/icons";
+import moment from "moment";
+import FormGenerator from "./components/FormGenerator";
 
 const { Option } = Select;
+const { TextArea } = Input;
+
+// const onChangeStartDate = (e) => {
+//   setValues((a) => ({ ...a, publishedDate: moment(e).format(dateFormat) }));
+// };
+
+const formItems = [
+  {
+    key: "title",
+    name: "title",
+    label: "Title",
+    rules: [{ required: true, message: "Please enter title" }],
+    type: <Input placeholder="Please enter title" />,
+  },
+  {
+    type: (
+      <DatePicker
+        format="YYYY/MM/DD"
+        // allowClear={true}
+        // showToday
+        // defaultPickerValue={moment(values.publishedDate)}
+        // value={moment(values.publishedDate)}
+        // onChange={onChangeStartDate}
+      />
+    ),
+    key: "startDate",
+    label: "start Date",
+    // error: errors.publishedDate,
+  },
+
+  {
+    key: "description",
+    name: "description",
+    label: "description",
+    rules: [{ required: true, message: "Please enter description" }],
+    type: (
+      <TextArea
+        className="form-control adjustable-textarea"
+        placeholder="Enter description"
+      />
+    ),
+  },
+];
 
 const columns = [
   {
@@ -25,42 +73,30 @@ const columns = [
     dataIndex: "sn",
     key: "sn",
   },
+  {
+    title: "Start Date",
+    dataIndex: "startDate",
+    key: "startDate",
+  },
 
   {
-    title: "Product Name",
-    dataIndex: "productname",
-    key: "productname",
-    render: (text) => <a>{text}</a>,
+    title: "Title",
+    dataIndex: "title",
+    key: "title",
+    search: true,
+    render: (text) => <span>{text}</span>,
   },
   {
-    title: "Product Id",
-    dataIndex: "productid",
-    key: "productid",
+    title: "Description",
+    dataIndex: "description",
+    key: "description",
+    // render: (text) => <span>{text === null ? '-' : text}</span>,
   },
   {
-    title: "Brand",
-    dataIndex: "brand",
-    key: "brand",
-  },
-  {
-    title: "Category",
-    dataIndex: "category",
-    key: "category",
-  },
-  {
-    title: "Subcategory",
-    dataIndex: "subcategory",
-    key: "subcategory",
-  },
-  {
-    title: "rate",
-    dataIndex: "rate",
-    key: "rate",
-  },
-  {
-    title: "Quantity",
-    dataIndex: "quantity",
-    key: "quantity",
+    title: "Slug",
+    dataIndex: "slug",
+    key: "slug",
+    // render: (text) => <span>{text === null ? '-' : text}</span>,
   },
 
   {
@@ -79,24 +115,18 @@ const data = [
   {
     sn: "1",
     key: "1",
-    productname: "dell  laptop",
-    productid: 111,
-    brand: "dell",
-    category: "electronics",
-    subcategory: "computers",
-    rate: 90000,
-    quantity: 12,
+    startDate: "05/05/2021",
+    title: "Cleanliness campaign",
+    description: "lorem ipsum de",
+    slug: "clean-campaign-nepal.html",
   },
   {
     sn: "2",
     key: "2",
-    productname: "Jim Green",
-    productid: 222,
-    brand: "dell",
-    category: 42,
-    subcategory: "Le Park",
-    rate: 99000,
-    quantity: 10,
+    startDate: "01/05/2022",
+    title: "Cleanliness campaign",
+    description: "lorem ipsum de",
+    slug: "clean-campaign-nepal.html",
   },
 ];
 
@@ -110,6 +140,7 @@ class Events extends React.Component {
         url: "http://www.baidu.com/abc.png",
       },
     ],
+    gender: "",
     visible: false,
   };
 
@@ -148,7 +179,7 @@ class Events extends React.Component {
           dataSource={data}
         />
         <Drawer
-          title="Add Product"
+          title="Add event"
           width={400}
           onClose={this.onClose}
           visible={this.state.visible}
@@ -168,124 +199,7 @@ class Events extends React.Component {
             </div>
           }
         >
-          <Form layout="vertical" hideRequiredMark>
-            <Row gutter={16}>
-              <Col span={12}>
-                <Form.Item
-                  name="productname"
-                  label="Product Name"
-                  rules={[
-                    { required: true, message: "Please enter product name" },
-                  ]}
-                >
-                  <Input placeholder="Please enter product name" />
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Form.Item name="imagebase" label="Image">
-                  <Upload {...props} fileList={this.state.fileList}>
-                    <Button icon={<UploadOutlined />}>Upload</Button>
-                  </Upload>
-                </Form.Item>
-              </Col>
-            </Row>
-            <Row gutter={16}>
-              <Col span={12}>
-                <Form.Item
-                  name="category"
-                  label="Category"
-                  rules={[
-                    { required: true, message: "Please select an owner" },
-                  ]}
-                >
-                  <Select placeholder="Please select an owner">
-                    <Option value="xiao">Xiaoxiao Fu</Option>
-                    <Option value="mao">Maomao Zhou</Option>
-                  </Select>
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Form.Item
-                  name="subcategory"
-                  label="Subcategory"
-                  rules={[
-                    { required: true, message: "Please select a subcategory" },
-                  ]}
-                >
-                  <Select placeholder="Please choose the type">
-                    <Option value="private">Private</Option>
-                    <Option value="public">Public</Option>
-                  </Select>
-                </Form.Item>
-              </Col>
-            </Row>
-            <Row gutter={16}>
-              <Col span={12}>
-                <Form.Item
-                  name="brand"
-                  label="Brand"
-                  rules={[
-                    { required: true, message: "Please choose the approver" },
-                  ]}
-                >
-                  <Select placeholder="Please choose the approver">
-                    <Option value="jack">Jack Ma</Option>
-                    <Option value="tom">Tom Liu</Option>
-                  </Select>
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Form.Item
-                  name="rate"
-                  label="Rate"
-                  rules={[{ required: true, message: "Please enter rate" }]}
-                >
-                  <Input placeholder="Please enter rate" />
-                </Form.Item>
-              </Col>
-            </Row>
-            <Row gutter={16}>
-              <Col span={12}>
-                <Form.Item
-                  name="quantity"
-                  label="Quantity"
-                  rules={[{ required: true, message: "Please enter quantity" }]}
-                >
-                  <InputNumber min={1} defaultValue={1} />
-                </Form.Item>
-              </Col>
-
-              <Col span={12}>
-                <Form.Item
-                  name="minorder"
-                  label="Min order"
-                  rules={[{ required: true, message: "Please enter rate" }]}
-                >
-                  <InputNumber min={1} defaultValue={1} />
-                </Form.Item>
-              </Col>
-            </Row>
-            <Row gutter={16}>
-              <Col span={24}>
-                <Form.Item
-                  name="description"
-                  label="Description"
-                  noStyle
-                  rules={[
-                    {
-                      required: true,
-                      message: "please enter product description",
-                    },
-                  ]}
-                >
-                  <Input.TextArea
-                    rows={4}
-                    placeholder="please enter product description"
-                  />
-                </Form.Item>
-              </Col>
-            </Row>
-          </Form>
+          <FormGenerator formItems={formItems} />
         </Drawer>
       </>
     );

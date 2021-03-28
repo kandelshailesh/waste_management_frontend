@@ -22,7 +22,6 @@ import Complaints from "./Complaints";
 import Events from "./Events";
 import Packages from "./Packages";
 import Blogs from "./Blogs";
-import Subscriptions from "./Subscriptions";
 
 const { Search } = Input;
 const { Header, Sider, Content, Footer } = Layout;
@@ -58,12 +57,6 @@ class DashboardHome extends React.Component {
     let actives = this.state.activeComponent;
     let activeComponentData;
 
-    // if (actives == "addProduct") {
-    //   activeComponentData = <AddProduct />;
-    // } else if ((actives = "orders")) {
-    //   activeComponentData = <Orders />;
-    // }
-
     if (actives == "addProduct") {
       activeComponentData = <AddProduct />;
     } else if (actives == "orders") {
@@ -76,10 +69,10 @@ class DashboardHome extends React.Component {
       activeComponentData = <Subcategory />;
     } else if (actives == "users") {
       activeComponentData = <Users />;
-    } else if (actives == "Brand") {
-      activeComponentData = <Brand />;
     } else if (actives == "Employees") {
       activeComponentData = <Employees />;
+    } else if (actives == "Brand") {
+      activeComponentData = <Brand />;
     } else if (actives == "Complaints") {
       activeComponentData = <Complaints />;
     } else if (actives == "Events") {
@@ -88,8 +81,6 @@ class DashboardHome extends React.Component {
       activeComponentData = <Packages />;
     } else if (actives == "Blogs") {
       activeComponentData = <Blogs />;
-    } else if (actives == "Subscriptions") {
-      activeComponentData = <Subscriptions />;
     } else {
       activeComponentData = " ";
     }

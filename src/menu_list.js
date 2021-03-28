@@ -55,13 +55,7 @@ export const menu_list = [
     label: "Blogs",
     type: "menu",
   },
-  {
-    key: 7,
-    icon: <KeyOutlined />,
-    component: "Subscriptions",
-    label: "Subscriptions",
-    type: "menu",
-  },
+
   {
     key: 8,
     icon: <CommentOutlined />,
