@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import ReactDOM from "react-dom";
-import "antd/dist/antd.css";
+import React, { useState } from 'react';
+import ReactDOM from 'react-dom';
+import 'antd/dist/antd.css';
 
 import {
   Drawer,
@@ -14,8 +14,8 @@ import {
   Upload,
   Table,
   Space,
-} from "antd";
-import { PlusOutlined, UploadOutlined } from "@ant-design/icons";
+} from 'antd';
+import { PlusOutlined, UploadOutlined } from '@ant-design/icons';
 
 const { Option } = Select;
 
@@ -31,27 +31,22 @@ const FormGenerator = ({ formItems }) => {
       visible: false,
     });
 
-    console.log("data submittion");
+    console.log('data submittion');
   };
 
-  return (
-    <>
-      <Form layout="vertical" hideRequiredMark>
-        {formItems.map((item) => {
-          return (
-            <Form.Item
-              key={item.key}
-              name={item.name}
-              label={item.label}
-              rules={item.rules}
-            >
-              {item.type}
-            </Form.Item>
-          );
-        })}
-      </Form>
-    </>
-  );
+  return formItems.map(item => {
+    return (
+      <Form.Item
+        key={item.key}
+        name={item.name}
+        label={item.label}
+        validateStatus={item.error && 'error'}
+        help={item.error}
+      >
+        {item.type}
+      </Form.Item>
+    );
+  });
 };
 // }
 

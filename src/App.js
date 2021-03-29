@@ -1,19 +1,47 @@
-import { render } from "@testing-library/react";
-import React from "react";
-import ReactDOM from "react-dom";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import React, { Suspense, useEffect, useState } from 'react';
+import ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { store } from './reducers/configureStore';
+import './index.css';
+import 'antd/dist/antd.css';
+import './styles/index.css';
 
-import "./App.css";
-import DashboardHome from "./dashboard-home";
+import Router from './navigation/Router';
 
-function App() {
-  return (
-    <Router>
-      <switch>
-        <Route exact path={"/"} component={DashboardHome} />
-      </switch>
-    </Router>
-  );
+if (process.env.NODE_ENV === 'production') {
+  console.log = () => {};
+  console.warn = () => {};
+  console.error = () => {};
 }
+
+export const Foodcan = React.createContext();
+
+const App = () => {
+  const [loading, setloading] = useState(false);
+
+  if (loading) {
+    return (
+      <div className='loadingdiv'>
+        <i class='fa fa-spinner fa-spin'></i>
+      </div>
+    );
+  }
+  return (
+    <Provider store={store}>
+      <Suspense
+        fallback={
+          <div className='loadingdiv'>
+            <i className='fa fa-spinner fa-spin'></i>
+          </div>
+        }
+      >
+        <BrowserRouter>
+          <Router />
+        </BrowserRouter>
+      </Suspense>
+    </Provider>
+  );
+};
 
 export default App;
