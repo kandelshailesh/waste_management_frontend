@@ -1,4 +1,4 @@
-import { ComplaintState } from '../ComponentState/complaints';
+import { SubscriptionState } from '../ComponentState/subscriptions';
 import { message } from 'antd';
 import moment from 'moment';
 /**
@@ -6,10 +6,10 @@ import moment from 'moment';
  * @param action
  */
 
-export const ComplaintReducer = (state = ComplaintState, action) => {
+export const SubscriptionReducer = (state = SubscriptionState, action) => {
   switch (action.type) {
-    case 'CREATE_COMPLAINT':
-      message.success('COMPLAINT ADDED SUCCESSFULLY');
+    case 'CREATE_SUBSCRIPTION':
+      message.success('SUBSCRIPTION ADDED SUCCESSFULLY');
       return {
         ...state,
         error: action.error,
@@ -17,7 +17,7 @@ export const ComplaintReducer = (state = ComplaintState, action) => {
         message: action.message,
         changed: true,
       };
-    case 'FETCH_COMPLAINT':
+    case 'FETCH_SUBSCRIPTION':
       return {
         ...state,
         error: action.error,
@@ -25,8 +25,8 @@ export const ComplaintReducer = (state = ComplaintState, action) => {
         message: action.message,
         changed: false,
       };
-    case 'EDIT_COMPLAINT':
-      message.success('COMPLAINT EDITED SUCCESSFULLY');
+    case 'EDIT_SUBSCRIPTION':
+      message.success('SUBSCRIPTION EDITED SUCCESSFULLY');
       return {
         ...state,
         error: action.error,
@@ -35,8 +35,8 @@ export const ComplaintReducer = (state = ComplaintState, action) => {
         message: action.message,
       };
 
-    case 'DELETE_COMPLAINT':
-      message.success('COMPLAINT DELETED SUCCESSFULLY');
+    case 'DELETE_SUBSCRIPTION':
+      message.success('SUBSCRIPTION DELETED SUCCESSFULLY');
       return {
         ...state,
         error: action.error,

@@ -40,7 +40,6 @@ export const EmployeeReducer = (state = EmployeeState, action) => {
       return {
         ...state,
         error: action.error,
-        payload: [],
         message: action.message,
         changed: true,
       };

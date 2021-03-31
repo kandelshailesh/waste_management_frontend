@@ -10,6 +10,9 @@ import {
   KeyOutlined,
   AppstoreAddOutlined,
   CommentOutlined,
+  ClockCircleOutlined,
+  CustomerServiceOutlined,
+  RocketOutlined,
 } from '@ant-design/icons';
 
 export const menu_list = [
@@ -77,11 +80,38 @@ export const menu_list = [
 
   {
     key: 8,
-    icon: <CommentOutlined />,
+    icon: <CustomerServiceOutlined />,
     component: 'Complaints',
     label: 'Complaints',
     type: 'menu',
     path: '/complaints',
+    wologin: true,
+    wlogin: true,
+  },
+  {
+    key: 9,
+    icon: <ClockCircleOutlined />,
+    label: 'Schedule',
+    type: 'menu',
+    path: '/schedules',
+    wologin: true,
+    wlogin: true,
+  },
+  {
+    key: 10,
+    icon: <CommentOutlined />,
+    label: 'Collection Request',
+    type: 'menu',
+    path: '/collection_request',
+    wologin: true,
+    wlogin: true,
+  },
+  {
+    key: 11,
+    icon: <RocketOutlined />,
+    label: 'Subscriptions',
+    type: 'menu',
+    path: '/subscriptions',
     wologin: true,
     wlogin: true,
   },

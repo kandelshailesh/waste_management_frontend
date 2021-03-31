@@ -11,21 +11,8 @@ const { SubMenu } = Menu;
 const menu = (
   <Menu>
     <Menu.Item>
-      <a
-        target='_blank'
-        rel='noopener noreferrer'
-        href='http://www.alipay.com/'
-      >
+      <a target='_blank' rel='noopener noreferrer' href='/'>
         Logout
-      </a>
-    </Menu.Item>
-    <Menu.Item>
-      <a
-        target='_blank'
-        rel='noopener noreferrer'
-        href='http://www.taobao.com/'
-      >
-        2nd menu item
       </a>
     </Menu.Item>
   </Menu>
@@ -51,13 +38,13 @@ class DashboardTopNav extends React.Component {
               aria-hidden='true'
             ></i>
           </Menu.Item>
-          <Menu.Item className='rm-ant-menu-item custom-search-field' key='4'>
+          {/* <Menu.Item className='rm-ant-menu-item custom-search-field' key='4'>
             <Search
               style={{ marginTop: '0.6rem', width: '100%' }}
               placeholder='input search text'
               enterButton
             />
-          </Menu.Item>
+          </Menu.Item> */}
 
           <Menu.Item className='rm-ant-menu-item custom-logout-section' key='7'>
             <Dropdown overlay={menu}>

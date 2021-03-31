@@ -5,12 +5,12 @@ import { actionCreator } from '../../reducers/actionCreator';
 import { Drawer, Button, Space, notification, message } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { STRINGS } from '_constants';
-import { UserTable } from './table';
-import { UserForm } from './form';
+import { SubscriptionTable } from './table';
+import { SubscriptionForm } from './form';
 
-const Users = props => {
+const Subscription = props => {
+  const title = 'Subscription';
   const [visible, setvisible] = useState(false);
-
   const [submitting, setsubmitting] = useState(false);
   const [clicked, setclicked] = useState(false);
   const [data, setData] = useState('');
@@ -24,10 +24,12 @@ const Users = props => {
     setData('');
   };
   const fetch = async () => {
-    await props.fetchUsers();
+    await props.fetchSubscriptions();
+    await props.fetchUsers({ isAdmin: '0', subscribed: '0' });
+    await props.fetchPackages();
   };
   const handleDelete = async id => {
-    const a = await props.deleteUser(id);
+    const a = await props.deleteSubscription(id);
     if (!a.error) {
       fetch();
     } else {
@@ -48,16 +50,16 @@ const Users = props => {
   return (
     <>
       <Button style={{ marginBottom: 10 }} type='primary' onClick={showDrawer}>
-        <PlusOutlined /> Add User
+        <PlusOutlined /> Add {title}
       </Button>
       <Space></Space>
-      <UserTable
-        userData={props.users}
+      <SubscriptionTable
+        userData={props.subscriptions}
         handleEdit={handleEdit}
         handleDelete={handleDelete}
       />
       <Drawer
-        title={id ? 'Edit User' : 'Add User'}
+        title={id ? `Edit ${title}` : `Add ${title}`}
         width={400}
         onClose={onClose}
         visible={visible}
@@ -81,7 +83,7 @@ const Users = props => {
           </div>
         }
       >
-        <UserForm
+        <SubscriptionForm
           setvisible={setvisible}
           setsubmitting={setsubmitting}
           setclicked={setclicked}
@@ -97,10 +99,12 @@ const Users = props => {
   );
 };
 
-const mapStoreToProps = ({ Users }) => {
-  console.log('state', Users);
+const mapStoreToProps = ({ Subscriptions, Users, Packages }) => {
+  console.log('state', Subscriptions);
   return {
+    subscriptions: Subscriptions.payload,
     users: Users.payload,
+    packages: Packages.payload,
   };
 };
 const mapDispatchToProps = dispatch => ({
@@ -112,22 +116,50 @@ const mapDispatchToProps = dispatch => ({
         param,
       }),
     ),
-  createUser: values =>
+  fetchPackages: param =>
     dispatch(
-      actionCreator({ method: 'POST', action_type: 'CREATE_USER', values }),
+      actionCreator({
+        method: 'GET',
+        action_type: 'FETCH_PACKAGE',
+        param,
+      }),
     ),
-  editUser: (id, values) =>
+  fetchSubscriptions: param =>
     dispatch(
-      actionCreator({ method: 'PATCH', id, action_type: 'EDIT_USER', values }),
+      actionCreator({
+        method: 'GET',
+        action_type: 'FETCH_SUBSCRIPTION',
+        param,
+      }),
     ),
-  deleteUser: id =>
+  createSubscription: values =>
+    dispatch(
+      actionCreator({
+        method: 'POST',
+        contentType: 'JSON',
+        action_type: 'CREATE_SUBSCRIPTION',
+        values,
+      }),
+    ),
+  editSubscription: (id, values) =>
+    dispatch(
+      actionCreator({
+        method: 'PATCH',
+        id,
+        action_type: 'EDIT_SUBSCRIPTION',
+        contentType: 'JSON',
+
+        values,
+      }),
+    ),
+  deleteSubscription: id =>
     dispatch(
       actionCreator({
         method: 'DELETE',
         id,
-        action_type: 'DELETE_USER',
+        action_type: 'DELETE_SUBSCRIPTION',
       }),
     ),
 });
 
-export default connect(mapStoreToProps, mapDispatchToProps)(Users);
+export default connect(mapStoreToProps, mapDispatchToProps)(Subscription);

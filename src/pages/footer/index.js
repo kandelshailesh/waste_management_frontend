@@ -16,7 +16,7 @@ class DashboardFooter extends Component {
           marginLeft: 5,
         }}
       >
-        ©2021 SHAILESH KANDEL
+        ©2021 FOHOR MAILA
       </Footer>
     );
   }

@@ -275,7 +275,7 @@ export const ListingSchema = Yup.object().shape({
       'Unsupported Format. Required:(.jpg,.png,.jpeg)',
       checkFileType,
     ),
-  // .test('fileSize', 'File too large,Please select file of width and height', async function(
+  // .test('fileSize', 'File too large,Please Select Image of width and height', async function(
   //   files,
   // ) {
   //   console.log(files);
@@ -305,7 +305,7 @@ export const ListingSchema = Yup.object().shape({
   //   }
   // }),
   description: Yup.string().required('Please enter description'),
-  // .test('fileSize', 'File too large,Please select file wiht width and height', async function(
+  // .test('fileSize', 'File too large,Please Select Image wiht width and height', async function(
   //   files,
   // ) {
   //   console.log(files);
@@ -319,7 +319,7 @@ export const ListingSchema = Yup.object().shape({
   //         console.log(err);
   //         reject(
   //           this.createError({
-  //             message: `Please select file proper width and height for image name ${err}`,
+  //             message: `Please Select Image proper width and height for image name ${err}`,
   //           }),
   //         );
   //       });

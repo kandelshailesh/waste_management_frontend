@@ -11,7 +11,7 @@ const loadable = loader => React.lazy(loader); // added
 const routes = [
   // System Pages
   {
-    path: '/dashboard',
+    path: '/',
     component: loadable(() => import('../pages/users')),
     exact: true,
     authorize: false,
@@ -49,6 +49,24 @@ const routes = [
   {
     path: '/employees',
     component: loadable(() => import('../pages/employee')),
+    exact: true,
+    authorize: false,
+  },
+  {
+    path: '/schedules',
+    component: loadable(() => import('../pages/schedule')),
+    exact: true,
+    authorize: false,
+  },
+  {
+    path: '/collection_request',
+    component: loadable(() => import('../pages/collection_request')),
+    exact: true,
+    authorize: false,
+  },
+  {
+    path: '/subscriptions',
+    component: loadable(() => import('../pages/subscriptions')),
     exact: true,
     authorize: false,
   },

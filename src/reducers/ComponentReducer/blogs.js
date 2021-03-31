@@ -40,7 +40,6 @@ export const BlogReducer = (state = BlogState, action) => {
       return {
         ...state,
         error: action.error,
-        payload: [],
         message: action.message,
         changed: true,
       };

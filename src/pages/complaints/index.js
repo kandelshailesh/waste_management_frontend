@@ -1,135 +1,152 @@
-import React, { useState } from 'react';
-import ReactDOM from 'react-dom';
+import React, { useState, useEffect } from 'react';
 import 'antd/dist/antd.css';
+import { connect } from 'react-redux';
+import { actionCreator } from '../../reducers/actionCreator';
+import { Drawer, Button, Space, notification, message } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
+import { STRINGS } from '_constants';
+import { ComplaintTable } from './table';
+import { ComplaintForm } from './form';
 
-import {
-  Drawer,
-  Form,
-  Button,
-  Col,
-  Row,
-  Input,
-  Select,
-  InputNumber,
-  Upload,
-  Table,
-  Space,
-} from 'antd';
-import { PlusOutlined, UploadOutlined } from '@ant-design/icons';
-
-const { Option } = Select;
-
-const columns = [
-  {
-    title: 'S.N',
-    dataIndex: 'sn',
-    key: 'sn',
-  },
-
-  {
-    title: 'Title',
-    dataIndex: 'title',
-    key: 'title',
-    search: true,
-    render: text => <span>{text}</span>,
-  },
-  {
-    title: 'Description',
-    dataIndex: 'description',
-    key: 'description',
-    // render: (text) => <span>{text === null ? '-' : text}</span>,
-  },
-  {
-    title: 'Slug',
-    dataIndex: 'slug',
-    key: 'slug',
-    // render: (text) => <span>{text === null ? '-' : text}</span>,
-  },
-  {
-    title: 'Author',
-    dataIndex: 'author',
-    key: 'author',
-    // render: (text) => <span>{text === null ? '-' : text}</span>,
-  },
-
-  {
-    title: 'Action',
-    key: 'action',
-    render: (text, record) => (
-      <Space size='middle'>
-        <a>Edit {record.name}</a>
-        <a>Delete</a>
-      </Space>
-    ),
-  },
-];
-
-const data = [
-  {
-    sn: '1',
-    key: '1',
-    title: 'Delay in waste collection timing',
-    description: 'lorem ipsum de',
-    slug: 'clean-campaign-nepal.html',
-    author: 'john doe',
-  },
-  {
-    sn: '2',
-    key: '2',
-    title: 'Many days gap in between collection  days',
-    description: 'lorem ipsum de',
-    slug: 'clean-campaign-nepal.html',
-    author: 'Tom cruise',
-  },
-];
-
-class Complaints extends React.Component {
-  state = {
-    fileList: [
-      {
-        uid: '-1',
-        name: 'xxx.png',
-        status: 'done',
-        url: 'http://www.baidu.com/abc.png',
-      },
-    ],
-    visible: false,
+const Complaint = props => {
+  const title = 'Complaint';
+  const [visible, setvisible] = useState(false);
+  const [submitting, setsubmitting] = useState(false);
+  const [clicked, setclicked] = useState(false);
+  const [data, setData] = useState('');
+  const [id, setId] = useState('');
+  const showDrawer = () => {
+    setvisible(true);
+  };
+  const onClose = () => {
+    setvisible(false);
+    setId('');
+    setData('');
+  };
+  const fetch = async () => {
+    await props.fetchComplaints();
+    await props.fetchUsers({ isAdmin: '0' });
+  };
+  const handleDelete = async id => {
+    const a = await props.deleteComplaint(id);
+    if (!a.error) {
+      fetch();
+    } else {
+      message.error(a.message);
+    }
   };
 
-  showDrawer = () => {
-    this.setState({
-      visible: true,
-    });
+  const handleEdit = record => {
+    setvisible(true);
+    setId(record.id);
+    setData(record);
   };
 
-  onClose = () => {
-    this.setState({
-      visible: false,
-    });
+  useEffect(() => {
+    if (!visible) fetch();
+  }, [visible]);
 
-    console.log('data submittion');
-  };
-
-  render() {
-    const props = {
-      action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
-      onChange: this.handleChange,
-      multiple: true,
-    };
-
-    return (
-      <>
-        <h2 style={{ textAlign: 'center' }}>Complaints</h2>
-        {/* table component */}
-
-        <Table
-          columns={columns}
-          pagination={{ position: ' buttomCenter ' }}
-          dataSource={data}
+  return (
+    <>
+      <Button style={{ marginBottom: 10 }} type='primary' onClick={showDrawer}>
+        <PlusOutlined /> Add {title}
+      </Button>
+      <Space></Space>
+      <ComplaintTable
+        userData={props.complaints}
+        handleEdit={handleEdit}
+        handleDelete={handleDelete}
+      />
+      <Drawer
+        title={id ? `Edit ${title}` : `Add ${title}`}
+        width={400}
+        onClose={onClose}
+        visible={visible}
+        bodyStyle={{ paddingBottom: 80 }}
+        footer={
+          <div
+            style={{
+              textAlign: 'center',
+            }}
+          >
+            <Button onClick={onClose} style={{ marginRight: 8 }}>
+              Cancel
+            </Button>
+            <Button
+              disabled={submitting}
+              onClick={() => setclicked(true)}
+              type='primary'
+            >
+              Submit
+            </Button>
+          </div>
+        }
+      >
+        <ComplaintForm
+          setvisible={setvisible}
+          setsubmitting={setsubmitting}
+          setclicked={setclicked}
+          clicked={clicked}
+          data={data}
+          id={id}
+          setData={setData}
+          setId={setId}
+          {...props}
         />
-      </>
-    );
-  }
-}
+      </Drawer>
+    </>
+  );
+};
 
-export default Complaints;
+const mapStoreToProps = ({ Complaints, Users }) => {
+  console.log('state', Complaints);
+  return {
+    complaints: Complaints.payload,
+    users: Users.payload,
+  };
+};
+const mapDispatchToProps = dispatch => ({
+  fetchUsers: param =>
+    dispatch(
+      actionCreator({
+        method: 'GET',
+        action_type: 'FETCH_USERS',
+        param,
+      }),
+    ),
+  fetchComplaints: param =>
+    dispatch(
+      actionCreator({
+        method: 'GET',
+        action_type: 'FETCH_COMPLAINT',
+        param,
+      }),
+    ),
+  createComplaint: values =>
+    dispatch(
+      actionCreator({
+        method: 'POST',
+        action_type: 'CREATE_COMPLAINT',
+        values,
+      }),
+    ),
+  editComplaint: (id, values) =>
+    dispatch(
+      actionCreator({
+        method: 'PATCH',
+        id,
+        action_type: 'EDIT_COMPLAINT',
+        values,
+      }),
+    ),
+  deleteComplaint: id =>
+    dispatch(
+      actionCreator({
+        method: 'DELETE',
+        id,
+        action_type: 'DELETE_COMPLAINT',
+      }),
+    ),
+});
+
+export default connect(mapStoreToProps, mapDispatchToProps)(Complaint);

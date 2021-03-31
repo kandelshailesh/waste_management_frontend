@@ -5,12 +5,12 @@ import { actionCreator } from '../../reducers/actionCreator';
 import { Drawer, Button, Space, notification, message } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { STRINGS } from '_constants';
-import { UserTable } from './table';
-import { UserForm } from './form';
+import { ScheduleTable } from './table';
+import { ScheduleForm } from './form';
 
-const Users = props => {
+const Schedule = props => {
+  const title = 'Schedule';
   const [visible, setvisible] = useState(false);
-
   const [submitting, setsubmitting] = useState(false);
   const [clicked, setclicked] = useState(false);
   const [data, setData] = useState('');
@@ -24,10 +24,11 @@ const Users = props => {
     setData('');
   };
   const fetch = async () => {
-    await props.fetchUsers();
+    await props.fetchSchedules();
+    await props.fetchUsers({ isAdmin: '0' });
   };
   const handleDelete = async id => {
-    const a = await props.deleteUser(id);
+    const a = await props.deleteSchedule(id);
     if (!a.error) {
       fetch();
     } else {
@@ -48,16 +49,16 @@ const Users = props => {
   return (
     <>
       <Button style={{ marginBottom: 10 }} type='primary' onClick={showDrawer}>
-        <PlusOutlined /> Add User
+        <PlusOutlined /> Add {title}
       </Button>
       <Space></Space>
-      <UserTable
-        userData={props.users}
+      <ScheduleTable
+        userData={props.schedules}
         handleEdit={handleEdit}
         handleDelete={handleDelete}
       />
       <Drawer
-        title={id ? 'Edit User' : 'Add User'}
+        title={id ? `Edit ${title}` : `Add ${title}`}
         width={400}
         onClose={onClose}
         visible={visible}
@@ -81,7 +82,7 @@ const Users = props => {
           </div>
         }
       >
-        <UserForm
+        <ScheduleForm
           setvisible={setvisible}
           setsubmitting={setsubmitting}
           setclicked={setclicked}
@@ -97,9 +98,10 @@ const Users = props => {
   );
 };
 
-const mapStoreToProps = ({ Users }) => {
-  console.log('state', Users);
+const mapStoreToProps = ({ Schedules, Users }) => {
+  console.log('state', Schedules);
   return {
+    schedules: Schedules.payload,
     users: Users.payload,
   };
 };
@@ -112,22 +114,42 @@ const mapDispatchToProps = dispatch => ({
         param,
       }),
     ),
-  createUser: values =>
+  fetchSchedules: param =>
     dispatch(
-      actionCreator({ method: 'POST', action_type: 'CREATE_USER', values }),
+      actionCreator({
+        method: 'GET',
+        action_type: 'FETCH_SCHEDULE',
+        param,
+      }),
     ),
-  editUser: (id, values) =>
+  createSchedule: values =>
     dispatch(
-      actionCreator({ method: 'PATCH', id, action_type: 'EDIT_USER', values }),
+      actionCreator({
+        method: 'POST',
+        contentType: 'JSON',
+        action_type: 'CREATE_SCHEDULE',
+        values,
+      }),
     ),
-  deleteUser: id =>
+  editSchedule: (id, values) =>
+    dispatch(
+      actionCreator({
+        method: 'PATCH',
+        id,
+        action_type: 'EDIT_SCHEDULE',
+        contentType: 'JSON',
+
+        values,
+      }),
+    ),
+  deleteSchedule: id =>
     dispatch(
       actionCreator({
         method: 'DELETE',
         id,
-        action_type: 'DELETE_USER',
+        action_type: 'DELETE_SCHEDULE',
       }),
     ),
 });
 
-export default connect(mapStoreToProps, mapDispatchToProps)(Users);
+export default connect(mapStoreToProps, mapDispatchToProps)(Schedule);

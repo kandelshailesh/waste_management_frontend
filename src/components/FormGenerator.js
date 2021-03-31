@@ -19,7 +19,8 @@ import { PlusOutlined, UploadOutlined } from '@ant-design/icons';
 
 const { Option } = Select;
 
-const FormGenerator = ({ formItems }) => {
+const FormGenerator = React.memo(({ formItems }) => {
+  console.log('Called');
   const showDrawer = () => {
     this.setState({
       visible: true,
@@ -47,7 +48,7 @@ const FormGenerator = ({ formItems }) => {
       </Form.Item>
     );
   });
-};
+});
 // }
 
 export default FormGenerator;

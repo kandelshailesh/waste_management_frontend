@@ -1,15 +1,18 @@
-import { ComplaintState } from '../ComponentState/complaints';
+import { CollectionRequestState } from '../ComponentState/collection_request';
 import { message } from 'antd';
-import moment from 'moment';
+
 /**
  * @param state
  * @param action
  */
 
-export const ComplaintReducer = (state = ComplaintState, action) => {
+export const CollectionRequestReducer = (
+  state = CollectionRequestState,
+  action,
+) => {
   switch (action.type) {
-    case 'CREATE_COMPLAINT':
-      message.success('COMPLAINT ADDED SUCCESSFULLY');
+    case 'CREATE_COLLECTION_REQUEST':
+      message.success('COLLECTION REQUEST ADDED SUCCESSFULLY');
       return {
         ...state,
         error: action.error,
@@ -17,7 +20,7 @@ export const ComplaintReducer = (state = ComplaintState, action) => {
         message: action.message,
         changed: true,
       };
-    case 'FETCH_COMPLAINT':
+    case 'FETCH_COLLECTION_REQUEST':
       return {
         ...state,
         error: action.error,
@@ -25,8 +28,8 @@ export const ComplaintReducer = (state = ComplaintState, action) => {
         message: action.message,
         changed: false,
       };
-    case 'EDIT_COMPLAINT':
-      message.success('COMPLAINT EDITED SUCCESSFULLY');
+    case 'EDIT_COLLECTION_REQUEST':
+      message.success('COLLECTION REQUEST EDITED SUCCESSFULLY');
       return {
         ...state,
         error: action.error,
@@ -34,9 +37,8 @@ export const ComplaintReducer = (state = ComplaintState, action) => {
         changed: true,
         message: action.message,
       };
-
-    case 'DELETE_COMPLAINT':
-      message.success('COMPLAINT DELETED SUCCESSFULLY');
+    case 'DELETE_COLLECTION_REQUEST':
+      message.success('COLLECTION REQUEST DELETED SUCCESSFULLY');
       return {
         ...state,
         error: action.error,

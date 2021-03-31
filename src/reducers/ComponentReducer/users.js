@@ -27,7 +27,6 @@ export const UsersReducer = (state = UserState, action) => {
       return {
         ...state,
         error: action.error,
-        payload: action.payload,
         message: action.message,
         changed: true,
       };

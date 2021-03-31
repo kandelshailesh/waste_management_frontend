@@ -40,7 +40,7 @@ export const EventReducer = (state = EventState, action) => {
       return {
         ...state,
         error: action.error,
-        payload: [],
+
         message: action.message,
         changed: true,
       };

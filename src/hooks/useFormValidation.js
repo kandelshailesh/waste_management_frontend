@@ -7,7 +7,7 @@ const useFormValidation = (
   initialState,
   validationSchema,
   callback,
-  enableReinitialize = true,
+  enableReinitialize = false,
 ) => {
   const [values, setValues] = useState(initialState);
 
