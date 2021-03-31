@@ -163,7 +163,6 @@ export const AccountDetailsSchema = Yup.object().shape({
 
 export const UserSchema = Yup.object().shape({
   fullName: Yup.string().required('Please enter fullname'),
-
   username: Yup.string().required('Please enter username'),
   email: Yup.string()
     .email('Please provide valid email')
@@ -175,22 +174,85 @@ export const UserSchema = Yup.object().shape({
     ),
   address: Yup.string().required('Please enter address'),
   phone: Yup.string().required('Please enter phone number'),
+  gender: Yup.string().oneOf(['male', 'female', 'other']),
+});
+
+export const UserEditSchema = Yup.object().shape({
+  fullName: Yup.string().required('Please enter fullname'),
+  username: Yup.string().required('Please enter username'),
+  email: Yup.string()
+    .email('Please provide valid email')
+    .required('Please enter email'),
+  address: Yup.string().required('Please enter address'),
+  phone: Yup.string().required('Please enter phone number'),
+  gender: Yup.string().oneOf(['male', 'female', 'other']),
 });
 
 export const LoginSchema = Yup.object().shape({
-  // email: Yup.string()
-  //   .email('Invalid email')
-  //   .required('Required'),
-  // password: Yup.string().required('Required'),
   email: Yup.string()
     .required('Please enter email')
     .email('Please enter valid email'),
   password: Yup.string().required('Please enter password'),
-  // otp: Yup.string().required('Required')
 });
 
 export const ForgotPasswordSchema = Yup.object().shape({
   email: Yup.string().email('Invalid email').required('Required'),
+});
+
+export const EmployeeSchema = Yup.object().shape({
+  fullName: Yup.string().required('Please enter fullname'),
+  email: Yup.string().email('Please provide valid email'),
+  address: Yup.string().required('Please enter address'),
+  phone: Yup.string().required('Please enter phone number'),
+  post: Yup.string().required('Please enter post'),
+  gender: Yup.string().oneOf(['male', 'female', 'other']),
+  type: Yup.string().oneOf(['normal', 'pickup']).required('Please select type'),
+});
+
+export const BlogSchema = Yup.object().shape({
+  title: Yup.string().required('Please enter title'),
+  description: Yup.string().required('Please enter content'),
+});
+
+export const ComplaintSchema = Yup.object().shape({
+  user_id: Yup.string().required('Please select user'),
+  title: Yup.string().required('Please enter title'),
+  description: Yup.string().required('Please enter description'),
+  location: Yup.string().required('Please enter location'),
+});
+
+export const PackageSchema = Yup.object().shape({
+  name: Yup.string().required('Please enter name'),
+  cost: Yup.string().required('Please enter cost'),
+  duration: Yup.string().required('Please enter location'),
+  unit: Yup.string().required('Please select unit').nullable(),
+  details: Yup.string().required('Please enter details'),
+});
+
+export const EventSchema = Yup.object().shape({
+  title: Yup.string().required('Please enter title'),
+  description: Yup.string().required('Please enter description'),
+  start_time: Yup.date().required('Please select start time').nullable(),
+});
+
+export const ScheduleSchema = Yup.object().shape({
+  user_id: Yup.string().required('Please select user').nullable(),
+  collection_date: Yup.date()
+    .required('Please select collection date')
+    .nullable(),
+  remarks: Yup.string(),
+});
+
+export const SubscriptionSchema = Yup.object().shape({
+  user_id: Yup.string().required('Please select user').nullable(),
+  package_id: Yup.date().required('Please select package').nullable(),
+  remarks: Yup.string(),
+});
+
+export const CollectionRequestSchema = Yup.object().shape({
+  user_id: Yup.string().required('Please select user').nullable(),
+  remarks: Yup.string().required('Please enter description'),
+  location: Yup.string().required('Please enter location'),
 });
 
 export const CheckoutShipAddrSchema = Yup.object().shape({
@@ -555,27 +617,4 @@ export const hospitaEditlUser = Yup.object().shape({
     .matches(regExMobNoUs, 'Phone number is not valid (eg: +1 (415) 555-2671)')
     .min(8)
     .required('phone number is required'),
-});
-
-export const onlineFormFilling = Yup.object().shape({
-  email: Yup.string()
-    .required('Please enter email address')
-    .email('Please enter valid email'),
-  name: Yup.string().required('Please enter Name'),
-});
-
-export const profileSettings = Yup.object().shape({
-  fullName: Yup.string().required('Please enter Full Name').nullable(),
-  email: Yup.string()
-    .required('Please enter email address')
-    .email('Please enter valid email'),
-  //password : Yup.string().password(),
-  //c_password: Yup.string().oneOf([Yup.ref('password'), 'null'], 'Password must match'),
-});
-
-export const PatientPaymentSchema = Yup.object().shape({
-  patient_id: Yup.number().required('Please select patient'),
-  appointment_date: Yup.date().required('Please select appointment date'),
-  reason: Yup.string().required('Please enter reason'),
-  amount: Yup.number().required('Please enter amount'),
 });

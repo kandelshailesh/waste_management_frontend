@@ -14,7 +14,7 @@ import {
   DatePicker,
 } from 'antd';
 import useUpload from 'hooks/useUpload';
-import { UserSchema } from '../../_utils/Schemas';
+import { EventSchema } from '../../_utils/Schemas';
 import isEmpty from 'lodash/isEmpty';
 import { getBaseName, getFormData } from '../../_utils/index';
 import { UploadOutlined } from '@ant-design/icons';
@@ -33,7 +33,7 @@ export const EventForm = props => {
   } = props;
 
   const initialValues = {
-    start_time: '',
+    start_time: null,
     status: 'active',
     title: '',
     description: '',
@@ -75,11 +75,12 @@ export const EventForm = props => {
     errors,
     setSubmitting,
     isSubmitting,
-  } = useFormValidation(initialValues, UserSchema, submitForm);
+    validateForm,
+  } = useFormValidation(initialValues, EventSchema, submitForm);
 
   useEffect(() => {
     if (clicked) {
-      submitForm();
+      validateForm();
     }
   }, [clicked]);
 
@@ -130,6 +131,7 @@ export const EventForm = props => {
           placeholder='Please enter title'
         />
       ),
+      error: errors.title,
     },
     {
       type: (
@@ -139,6 +141,7 @@ export const EventForm = props => {
           name='start_time'
           // allowClear={true}
           showToday
+          showTime
           // defaultPickerValue={moment(values.publishedDate)}
           // value={moment(values.publishedDate)}
           onChange={val => {
@@ -151,7 +154,7 @@ export const EventForm = props => {
       ),
       key: 'start_time',
       label: 'Start DateTime',
-      // error: errors.publishedDate,
+      error: errors.start_time,
     },
 
     {
@@ -167,6 +170,7 @@ export const EventForm = props => {
           placeholder='Enter description'
         />
       ),
+      error: errors.description,
     },
     {
       type: (

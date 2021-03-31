@@ -14,7 +14,7 @@ import {
   DatePicker,
 } from 'antd';
 import useUpload from 'hooks/useUpload';
-import { UserSchema } from '../../_utils/Schemas';
+import { ComplaintSchema } from '../../_utils/Schemas';
 import isEmpty from 'lodash/isEmpty';
 import { getBaseName, getFormData } from '../../_utils/index';
 import { UploadOutlined } from '@ant-design/icons';
@@ -75,11 +75,13 @@ export const ComplaintForm = props => {
     errors,
     setSubmitting,
     isSubmitting,
-  } = useFormValidation(initialValues, UserSchema, submitForm);
+    validateForm,
+  } = useFormValidation(initialValues, ComplaintSchema, submitForm);
 
   useEffect(() => {
     if (clicked) {
-      submitForm();
+      validateForm();
+      //submitForm();
     }
   }, [clicked]);
 
@@ -141,6 +143,7 @@ export const ComplaintForm = props => {
       key: 'title',
       name: 'title',
       label: 'Title',
+      error: errors.title,
       rules: [{ required: true, message: 'Please enter title' }],
       type: (
         <Input
@@ -154,6 +157,7 @@ export const ComplaintForm = props => {
       key: 'description',
       name: 'description',
       label: 'Description',
+      error: errors.description,
       rules: [{ required: true, message: 'Please enter description' }],
       type: (
         <Input.TextArea

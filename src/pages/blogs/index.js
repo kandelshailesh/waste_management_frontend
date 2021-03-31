@@ -60,6 +60,7 @@ const Blogs = props => {
         title={id ? 'Edit Blog' : 'Add Blog'}
         width={700}
         onClose={onClose}
+        destroyOnClose
         visible={visible}
         bodyStyle={{ paddingBottom: 80 }}
         footer={
@@ -73,7 +74,7 @@ const Blogs = props => {
             </Button>
             <Button
               disabled={submitting}
-              onClick={() => setclicked(true)}
+              onClick={() => setclicked(Math.random())}
               type='primary'
             >
               Submit

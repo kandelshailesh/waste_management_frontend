@@ -14,7 +14,7 @@ import {
   DatePicker,
 } from 'antd';
 import useUpload from 'hooks/useUpload';
-import { UserSchema } from '../../_utils/Schemas';
+import { SubscriptionSchema } from '../../_utils/Schemas';
 import isEmpty from 'lodash/isEmpty';
 import { getBaseName, getFormData } from '../../_utils/index';
 import { UploadOutlined } from '@ant-design/icons';
@@ -74,11 +74,13 @@ export const SubscriptionForm = props => {
     errors,
     setSubmitting,
     isSubmitting,
-  } = useFormValidation(initialValues, UserSchema, submitForm);
+    validateForm,
+  } = useFormValidation(initialValues, SubscriptionSchema, submitForm);
 
   useEffect(() => {
     if (clicked) {
-      submitForm();
+      validateForm();
+      //submitForm();
     }
   }, [clicked]);
 

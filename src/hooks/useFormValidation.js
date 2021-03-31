@@ -86,10 +86,11 @@ const useFormValidation = (
         .then(() => {
           // console.log('values are valid')
           setErrors({});
+          callback();
         })
         .catch(err => {
           // // console.log(values)
-          // console.log(err)
+          console.log(err);
           if (err && err.inner) {
             const errorArray = err.inner.map(e => ({ [e.path]: e.message }));
             const errObject = Object.assign({}, ...errorArray);

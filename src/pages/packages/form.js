@@ -13,7 +13,7 @@ import {
   message,
 } from 'antd';
 import useUpload from 'hooks/useUpload';
-import { UserSchema } from '../../_utils/Schemas';
+import { PackageSchema } from '../../_utils/Schemas';
 import isEmpty from 'lodash/isEmpty';
 import { getBaseName, getFormData } from '../../_utils/index';
 import { UploadOutlined } from '@ant-design/icons';
@@ -32,7 +32,7 @@ export const PackageForm = props => {
 
   const initialValues = {
     status: 'active',
-    unit: 'days',
+    unit: null,
     duration: '',
     details: '',
     name: '',
@@ -75,11 +75,13 @@ export const PackageForm = props => {
     errors,
     setSubmitting,
     isSubmitting,
-  } = useFormValidation(initialValues, UserSchema, submitForm);
+    validateForm,
+  } = useFormValidation(initialValues, PackageSchema, submitForm);
 
   useEffect(() => {
     if (clicked) {
-      submitForm();
+      validateForm();
+      //submitForm();
     }
   }, [clicked]);
 
@@ -122,6 +124,7 @@ export const PackageForm = props => {
       key: 'name',
       name: 'name',
       label: 'Package Name',
+      error: errors.name,
       rules: [{ required: true, message: 'Please enter package name' }],
       type: (
         <Input
@@ -136,6 +139,7 @@ export const PackageForm = props => {
       key: 'cost',
       name: 'cost',
       label: 'Cost',
+      error: errors.cost,
 
       rules: [{ required: true, message: 'Please enter cost' }],
       type: (
@@ -151,6 +155,8 @@ export const PackageForm = props => {
       key: 'duration',
       name: 'duration',
       label: 'Duration',
+      error: errors.duration,
+
       rules: [{ required: true, message: 'Please enter duration' }],
       type: (
         <InputNumber
@@ -168,7 +174,7 @@ export const PackageForm = props => {
           defaultActiveFirstOption={false}
           showArrow={true}
           filterOption={false}
-          // onChange={handleChange}
+          onChange={val => setValues(a => ({ ...a, unit: val }))}
           // onSearch={handleSearch}
           value={values.unit}
           name='unit'
@@ -187,12 +193,13 @@ export const PackageForm = props => {
       ),
       key: 'unit',
       label: 'Unit',
-      // error: errors.location,
+      error: errors.unit,
     },
     {
       key: 'details',
       name: 'details',
       label: 'Description',
+      error: errors.details,
       rules: [{ required: true, message: 'Please enter description' }],
       type: (
         <Input.TextArea

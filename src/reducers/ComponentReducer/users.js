@@ -24,6 +24,7 @@ export const UsersReducer = (state = UserState, action) => {
         changed: false,
       };
     case 'EDIT_USER':
+      message.success('USER EDITED SUCCESSFULLY');
       return {
         ...state,
         error: action.error,

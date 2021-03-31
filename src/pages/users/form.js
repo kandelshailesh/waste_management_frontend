@@ -13,7 +13,7 @@ import {
   message,
 } from 'antd';
 import useUpload from 'hooks/useUpload';
-import { UserSchema } from '../../_utils/Schemas';
+import { UserSchema, UserEditSchema } from '../../_utils/Schemas';
 import isEmpty from 'lodash/isEmpty';
 import { getBaseName, getFormData } from '../../_utils/index';
 import { UploadOutlined } from '@ant-design/icons';
@@ -81,11 +81,17 @@ export const UserForm = props => {
     errors,
     setSubmitting,
     isSubmitting,
-  } = useFormValidation(initialValues, UserSchema, submitForm);
+    validateForm,
+  } = useFormValidation(
+    initialValues,
+    id ? UserEditSchema : UserSchema,
+    submitForm,
+  );
 
   useEffect(() => {
     if (clicked) {
-      submitForm();
+      validateForm();
+      //submitForm();
     }
   }, [clicked]);
 
@@ -122,7 +128,7 @@ export const UserForm = props => {
 
     const { image, ...rest } = values;
     const formData = await getFormData(rest);
-    if (Array.isArray(image)) {
+    if (Array.isArray(image) && image[0]?.originFileObj) {
       formData.append('image', image[0].originFileObj);
     }
     if (values?.image && values?.image[0]?.originFileObj) {
@@ -216,7 +222,7 @@ export const UserForm = props => {
         />
       ),
       error: errors.password,
-      editDisable: true,
+      // editDisable: true,
     },
     {
       key: 'phone',

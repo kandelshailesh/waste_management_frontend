@@ -14,7 +14,7 @@ import {
   DatePicker,
 } from 'antd';
 import useUpload from 'hooks/useUpload';
-import { UserSchema } from '../../_utils/Schemas';
+import { CollectionRequestSchema } from '../../_utils/Schemas';
 import isEmpty from 'lodash/isEmpty';
 import { getBaseName, getFormData } from '../../_utils/index';
 import { UploadOutlined } from '@ant-design/icons';
@@ -34,8 +34,9 @@ export const CollectionRequestForm = props => {
 
   const initialValues = {
     status: 'pending',
-        remarks: '',
+    remarks: '',
     user_id: null,
+    location: '',
   };
   const {
     onChange: onChangeMain,
@@ -74,11 +75,13 @@ export const CollectionRequestForm = props => {
     errors,
     setSubmitting,
     isSubmitting,
-  } = useFormValidation(initialValues, UserSchema, submitForm);
+    validateForm,
+  } = useFormValidation(initialValues, CollectionRequestSchema, submitForm);
 
   useEffect(() => {
     if (clicked) {
-      submitForm();
+      validateForm();
+      //submitForm();
     }
   }, [clicked]);
 

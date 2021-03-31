@@ -77,11 +77,13 @@ export const EmployeeForm = props => {
     errors,
     setSubmitting,
     isSubmitting,
+    validateForm,
   } = useFormValidation(initialValues, UserSchema, submitForm);
 
   useEffect(() => {
     if (clicked) {
-      submitForm();
+      validateForm();
+      //submitForm();
     }
   }, [clicked]);
 

@@ -25,7 +25,7 @@ export default function Editor(props) {
       });
     }, 10);
 
-    return () => window.tinymce.remove('.kt-tinymce-4');
+    // return () => window.tinymce.remove('.kt-tinymce-4');
   }, []);
 
   return (

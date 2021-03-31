@@ -13,7 +13,7 @@ import {
   message,
 } from 'antd';
 import useUpload from 'hooks/useUpload';
-import { UserSchema } from '../../_utils/Schemas';
+import { BlogSchema } from '../../_utils/Schemas';
 import isEmpty from 'lodash/isEmpty';
 import { getBaseName, getFormData } from '../../_utils/index';
 import { UploadOutlined } from '@ant-design/icons';
@@ -36,7 +36,6 @@ export const BlogForm = props => {
     description: '',
     title: '',
     author_id: 1,
-    image: '',
   };
   const {
     onChange: onChangeMain,
@@ -82,11 +81,13 @@ export const BlogForm = props => {
     errors,
     setSubmitting,
     isSubmitting,
-  } = useFormValidation(initialValues, UserSchema, submitForm);
+    validateForm,
+  } = useFormValidation(initialValues, BlogSchema, submitForm);
 
   useEffect(() => {
     if (clicked) {
-      submitForm();
+      validateForm();
+      //submitForm();
     }
   }, [clicked]);
 
@@ -122,12 +123,10 @@ export const BlogForm = props => {
 
     const { image, ...rest } = values;
     const formData = await getFormData(rest);
-    if (Array.isArray(image)) {
+    if (image && Array.isArray(image) && image.length > 0) {
       formData.append('image', image[0].originFileObj);
     }
-    if (values?.image && values?.image[0]?.originFileObj) {
-      formData.append('delete_profile', data.deleteImage);
-    }
+
     const a = data
       ? await props.editBlog(data.id, formData)
       : await props.createBlog(formData);
@@ -171,6 +170,7 @@ export const BlogForm = props => {
           placeholder='Please enter title'
         />
       ),
+      error: errors.title,
     },
     {
       type: (
@@ -184,19 +184,6 @@ export const BlogForm = props => {
       error: errors.description,
       key: 'description',
     },
-    // {
-    //   key: 'description',
-    //   name: 'description',
-    //   label: 'Description',
-    //   rules: [{ required: true, message: 'Please enter description' }],
-    //   type: (
-    //     <Input.TextArea
-    //       name='description'
-    //       value={values.description}
-    //       placeholder='Enter description'
-    //     />
-    //   ),
-    // },
 
     {
       type: (

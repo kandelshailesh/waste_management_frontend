@@ -74,7 +74,7 @@ const Schedule = props => {
             </Button>
             <Button
               disabled={submitting}
-              onClick={() => setclicked(true)}
+              onClick={() => setclicked(Math.random())}
               type='primary'
             >
               Submit

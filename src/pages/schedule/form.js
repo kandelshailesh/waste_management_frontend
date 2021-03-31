@@ -14,7 +14,7 @@ import {
   DatePicker,
 } from 'antd';
 import useUpload from 'hooks/useUpload';
-import { UserSchema } from '../../_utils/Schemas';
+import { ScheduleSchema } from '../../_utils/Schemas';
 import isEmpty from 'lodash/isEmpty';
 import { getBaseName, getFormData } from '../../_utils/index';
 import { UploadOutlined } from '@ant-design/icons';
@@ -37,7 +37,7 @@ export const ScheduleForm = props => {
     title: '',
     remarks: '',
     user_id: null,
-    collection_date: '',
+    collection_date: null,
   };
   const {
     onChange: onChangeMain,
@@ -76,11 +76,13 @@ export const ScheduleForm = props => {
     errors,
     setSubmitting,
     isSubmitting,
-  } = useFormValidation(initialValues, UserSchema, submitForm);
+    validateForm,
+  } = useFormValidation(initialValues, ScheduleSchema, submitForm);
 
   useEffect(() => {
     if (clicked) {
-      submitForm();
+      validateForm();
+      //submitForm();
     }
   }, [clicked]);
 
@@ -134,13 +136,14 @@ export const ScheduleForm = props => {
       ),
       key: 'user_id',
       label: 'Select User',
-      // error: errors.publishedDate,
+      error: errors.user_id,
     },
     {
       type: (
         <DatePicker
-          format='YYYY/MM/DD HH:mm'
+          format='YYYY/MM/DD HH:mm '
           name='collection_date'
+          value={values.collection_date ? moment(values.collection_date) : null}
           allowClear={true}
           showToday
           showTime
@@ -153,9 +156,9 @@ export const ScheduleForm = props => {
           }}
         />
       ),
-      key: 'collection_time',
+      key: 'collection_date',
       label: 'Collection Time',
-      // error: errors.publishedDate,
+      error: errors.collection_date,
     },
     {
       type: (
