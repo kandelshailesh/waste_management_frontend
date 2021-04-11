@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import ReactDOM from 'react-dom';
-import 'antd/dist/antd.css';
+import React, { useState } from "react";
+import ReactDOM from "react-dom";
+import "antd/dist/antd.css";
 
 import {
   Drawer,
@@ -14,13 +14,13 @@ import {
   Upload,
   Table,
   Space,
-} from 'antd';
-import { PlusOutlined, UploadOutlined } from '@ant-design/icons';
+} from "antd";
+import { PlusOutlined, UploadOutlined } from "@ant-design/icons";
 
 const { Option } = Select;
 
 const FormGenerator = React.memo(({ formItems }) => {
-  console.log('Called');
+  console.log("Called");
   const showDrawer = () => {
     this.setState({
       visible: true,
@@ -32,16 +32,16 @@ const FormGenerator = React.memo(({ formItems }) => {
       visible: false,
     });
 
-    console.log('data submittion');
+    console.log("data submittion");
   };
 
-  return formItems.map(item => {
+  return formItems.map((item) => {
     return (
       <Form.Item
         key={item.key}
         name={item.name}
         label={item.label}
-        validateStatus={item.error && 'error'}
+        validateStatus={item.error && "error"}
         help={item.error}
       >
         {item.type}
