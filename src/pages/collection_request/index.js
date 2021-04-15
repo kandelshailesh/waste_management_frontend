@@ -1,33 +1,33 @@
-import React, { useState, useEffect } from 'react';
-import 'antd/dist/antd.css';
-import { connect } from 'react-redux';
-import { actionCreator } from '../../reducers/actionCreator';
-import { Drawer, Button, Space, notification, message } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
-import { STRINGS } from '_constants';
-import { CollectionRequestTable } from './table';
-import { CollectionRequestForm } from './form';
+import React, { useState, useEffect } from "react";
+import "antd/dist/antd.css";
+import { connect } from "react-redux";
+import { actionCreator } from "../../reducers/actionCreator";
+import { Drawer, Button, Space, notification, message } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
+import { STRINGS } from "_constants";
+import { CollectionRequestTable } from "./table";
+import { CollectionRequestForm } from "./form";
 
-const CollectionRequest = props => {
-  const title = 'Collection Request';
+const CollectionRequest = (props) => {
+  const title = "Collection Request";
   const [visible, setvisible] = useState(false);
   const [submitting, setsubmitting] = useState(false);
   const [clicked, setclicked] = useState(false);
-  const [data, setData] = useState('');
-  const [id, setId] = useState('');
+  const [data, setData] = useState("");
+  const [id, setId] = useState("");
   const showDrawer = () => {
     setvisible(true);
   };
   const onClose = () => {
     setvisible(false);
-    setId('');
-    setData('');
+    setId("");
+    setData("");
   };
   const fetch = async () => {
     await props.fetchCollectionRequests();
-    await props.fetchUsers({ isAdmin: '0' });
+    await props.fetchUsers({ isAdmin: "0" });
   };
-  const handleDelete = async id => {
+  const handleDelete = async (id) => {
     const a = await props.deleteCollectionRequest(id);
     if (!a.error) {
       fetch();
@@ -36,7 +36,7 @@ const CollectionRequest = props => {
     }
   };
 
-  const handleEdit = record => {
+  const handleEdit = (record) => {
     setvisible(true);
     setId(record.id);
     setData(record);
@@ -48,7 +48,7 @@ const CollectionRequest = props => {
 
   return (
     <>
-      <Button style={{ marginBottom: 10 }} type='primary' onClick={showDrawer}>
+      <Button style={{ marginBottom: 10 }} type="primary" onClick={showDrawer}>
         <PlusOutlined /> Add {title}
       </Button>
       <Space></Space>
@@ -66,7 +66,7 @@ const CollectionRequest = props => {
         footer={
           <div
             style={{
-              textAlign: 'center',
+              textAlign: "center",
             }}
           >
             <Button onClick={onClose} style={{ marginRight: 8 }}>
@@ -75,7 +75,7 @@ const CollectionRequest = props => {
             <Button
               disabled={submitting}
               onClick={() => setclicked(Math.random())}
-              type='primary'
+              type="primary"
             >
               Submit
             </Button>
@@ -99,56 +99,57 @@ const CollectionRequest = props => {
 };
 
 const mapStoreToProps = ({ CollectionRequests, Users }) => {
-  console.log('state', CollectionRequests);
+  console.log("state", CollectionRequests);
   return {
     collection_request: CollectionRequests.payload,
     users: Users.payload,
   };
 };
-const mapDispatchToProps = dispatch => ({
-  fetchUsers: param =>
+const mapDispatchToProps = (dispatch) => ({
+  fetchUsers: (param) =>
     dispatch(
       actionCreator({
-        method: 'GET',
-        action_type: 'FETCH_USERS',
+        method: "GET",
+        action_type: "FETCH_USERS",
         param,
-      }),
+      })
     ),
-  fetchCollectionRequests: param =>
+  fetchCollectionRequests: (param) =>
     dispatch(
       actionCreator({
-        method: 'GET',
-        action_type: 'FETCH_COLLECTION_REQUEST',
+        method: "GET",
+        action_type: "FETCH_COLLECTION_REQUEST",
         param,
-      }),
+      })
     ),
-  createCollectionRequest: values =>
+  createCollectionRequest: (values) =>
     dispatch(
       actionCreator({
-        method: 'POST',
-        contentType: 'JSON',
-        action_type: 'CREATE_COLLECTION_REQUEST',
+        method: "POST",
+        contentType: "JSON",
+        action_type: "CREATE_COLLECTION_REQUEST",
         values,
-      }),
+      })
     ),
   editCollectionRequest: (id, values) =>
     dispatch(
       actionCreator({
-        method: 'PATCH',
+        method: "PATCH",
         id,
-        action_type: 'EDIT_COLLECTION_REQUEST',
-        contentType: 'JSON',
+        action_type: "EDIT_COLLECTION_REQUEST",
+        contentType: "JSON",
 
         values,
-      }),
+      })
     ),
-  deleteCollectionRequest: id =>
+
+  deleteCollectionRequest: (id) =>
     dispatch(
       actionCreator({
-        method: 'DELETE',
+        method: "DELETE",
         id,
-        action_type: 'DELETE_COLLECTION_REQUEST',
-      }),
+        action_type: "DELETE_COLLECTION_REQUEST",
+      })
     ),
 });
 

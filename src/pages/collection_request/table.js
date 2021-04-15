@@ -1,78 +1,78 @@
-import React from 'react';
-import { Button, Table, Space, Tooltip, Popconfirm } from 'antd';
-import { DeleteFilled, EditFilled } from '@ant-design/icons';
-import moment from 'moment';
+import React from "react";
+import { Button, Table, Space, Tooltip, Popconfirm } from "antd";
+import { DeleteFilled, EditFilled } from "@ant-design/icons";
+import moment from "moment";
 
-export const CollectionRequestTable = props => {
-  console.log('Collection Request table');
+export const CollectionRequestTable = (props) => {
+  console.log("Collection Request table");
   const columns = [
     {
-      title: 'S.N',
-      dataIndex: 'sn',
-      key: 'sn',
+      title: "S.N",
+      dataIndex: "sn",
+      key: "sn",
       render: (_, record, index) => <span>{index + 1}</span>,
     },
     {
-      title: 'Fullname',
-      key: 'fullName',
+      title: "Fullname",
+      key: "fullName",
       render: (_, record) => <span>{record.user.fullName}</span>,
     },
     {
-      title: 'Address',
-      key: 'location',
-      dataIndex: 'location',
-      render: text => <span>{text}</span>,
+      title: "Address",
+      key: "location",
+      dataIndex: "location",
+      render: (text) => <span>{text}</span>,
     },
     {
-      title: 'Phone',
-      key: 'phone',
+      title: "Phone",
+      key: "phone",
       render: (_, record) => <span>{record.user.phone}</span>,
     },
     {
-      title: 'Requested Date',
-      dataIndex: 'requested_at',
-      key: 'requested_at',
+      title: "Requested Date",
+      dataIndex: "requested_at",
+      key: "requested_at",
       search: true,
-      render: text => (
-        <span>{moment(text).format('MMMM Do YYYY, h:mm:ss a')}</span>
+      render: (text) => (
+        <span>{moment(text).format("MMMM Do YYYY, h:mm:ss a")}</span>
       ),
     },
     {
-      title: 'Status',
-      dataIndex: 'status',
-      key: 'status',
-      render: text => <span>{text.toUpperCase()}</span>,
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+      render: (text) => <span>{text.toUpperCase()}</span>,
     },
     {
-      title: 'Remarks',
-      dataIndex: 'remarks',
-      key: 'remarks',
-      render: text => <span>{text.toUpperCase()}</span>,
+      title: "Remarks",
+      dataIndex: "remarks",
+      key: "remarks",
+      render: (text) => <span>{text?.toUpperCase()}</span>,
     },
     {
-      title: 'Action',
-      key: 'action',
+      title: "Action",
+      key: "action",
       render: (text, record) => (
-        <Space size='middle'>
+        <Space size="middle">
           <Button
             onClick={() => props.handleEdit(record)}
-            className='mr-1 bg-primary'
-            size='small'
-            style={{ backgroundColor: 'white', border: 0 }}
+            className="mr-1 bg-primary"
+            size="small"
+            style={{ backgroundColor: "white", border: 0 }}
           >
-            <EditFilled style={{ color: 'green' }} />
+            <EditFilled style={{ color: "green" }} />
           </Button>
-          <Tooltip placement='bottomRight' title='Delete'>
+          <Tooltip placement="bottomRight" title="Delete">
             <Popconfirm
-              title='Delete record?'
+              title="Delete record?"
               onConfirm={() => props.handleDelete(record.id)}
             >
               <Button
-                className='mr-1'
-                style={{ backgroundColor: 'white', border: 0 }}
-                size='small'
+                className="mr-1"
+                style={{ backgroundColor: "white", border: 0 }}
+                size="small"
               >
-                <DeleteFilled style={{ color: 'red' }} />
+                <DeleteFilled style={{ color: "red" }} />
               </Button>
             </Popconfirm>
           </Tooltip>
@@ -83,7 +83,7 @@ export const CollectionRequestTable = props => {
 
   return (
     <Table
-      pagination={{ position: ' bottomCenter ' }}
+      pagination={{ position: " bottomCenter " }}
       columns={columns}
       dataSource={props.userData}
     ></Table>

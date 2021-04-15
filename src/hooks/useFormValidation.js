@@ -1,13 +1,13 @@
-import { useState, useEffect } from 'react';
-import { notification } from 'antd';
-import { STRINGS } from '_constants';
+import { useState, useEffect } from "react";
+import { notification } from "antd";
+import { STRINGS } from "_constants";
 // import useDidMountEffect from './useDidMountEffect'
 
 const useFormValidation = (
   initialState,
   validationSchema,
   callback,
-  enableReinitialize = false,
+  enableReinitialize = false
 ) => {
   const [values, setValues] = useState(initialState);
 
@@ -52,7 +52,7 @@ const useFormValidation = (
     // console.log(options)
     if (event) event.preventDefault();
     let msg = null;
-    if (typeof options !== 'undefined' && options.notifyMsg)
+    if (typeof options !== "undefined" && options.notifyMsg)
       msg = options.notifyMsg;
     await validateForm(msg);
     // console.log('validate() called', isSubmitting)
@@ -65,17 +65,15 @@ const useFormValidation = (
 
     event.persist();
     console.log(event);
-    console.log('Changed', event.target.value);
-
-    setValues(val => ({ ...val, [event.target.name]: event.target.value }));
-
+    console.log("Changed", event.target.value);
+    setValues((val) => ({ ...val, [event.target.name]: event.target.value }));
     if (cb) cb();
   };
 
-  const validateForm = async notifyMsg => {
+  const validateForm = async (notifyMsg) => {
     // console.log('validateForm', notifyMsg)
     // console.log('values', values)
-    console.log('touched', touched);
+    console.log("touched", touched);
 
     return (
       validationSchema
@@ -88,11 +86,11 @@ const useFormValidation = (
           setErrors({});
           callback();
         })
-        .catch(err => {
+        .catch((err) => {
           // // console.log(values)
           console.log(err);
           if (err && err.inner) {
-            const errorArray = err.inner.map(e => ({ [e.path]: e.message }));
+            const errorArray = err.inner.map((e) => ({ [e.path]: e.message }));
             const errObject = Object.assign({}, ...errorArray);
             // console.log('errObject', errObject)
             if (notifyMsg) {
@@ -129,10 +127,10 @@ const useFormValidation = (
   //     })
   // }
 
-  const onBlur = event => {
+  const onBlur = (event) => {
     event.persist();
     // console.log('onBlur', event)
-    setTouched(a => ({ ...a, [event.target.name]: true }));
+    setTouched((a) => ({ ...a, [event.target.name]: true }));
     // validateForm()
     // if (event.target.type === "button") return;
     // setValues(val => ({ ...val, [event.target.name]: event.target.value }))

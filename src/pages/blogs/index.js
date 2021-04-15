@@ -1,32 +1,32 @@
-import React, { useState, useEffect } from 'react';
-import 'antd/dist/antd.css';
-import { connect } from 'react-redux';
-import { actionCreator } from '../../reducers/actionCreator';
-import { Drawer, Button, Space, notification, message } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
-import { STRINGS } from '_constants';
-import { BlogTable } from './table';
-import { BlogForm } from './form';
+import React, { useState, useEffect } from "react";
+import "antd/dist/antd.css";
+import { connect } from "react-redux";
+import { actionCreator } from "../../reducers/actionCreator";
+import { Drawer, Button, Space, notification, message } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
+import { STRINGS } from "_constants";
+import { BlogTable } from "./table";
+import { BlogForm } from "./form";
 
-const Blogs = props => {
+const Blogs = (props) => {
   const [visible, setvisible] = useState(false);
 
   const [submitting, setsubmitting] = useState(false);
   const [clicked, setclicked] = useState(false);
-  const [data, setData] = useState('');
-  const [id, setId] = useState('');
+  const [data, setData] = useState("");
+  const [id, setId] = useState("");
   const showDrawer = () => {
     setvisible(true);
   };
   const onClose = () => {
     setvisible(false);
-    setId('');
-    setData('');
+    setId("");
+    setData("");
   };
   const fetch = async () => {
     await props.fetchBlogs();
   };
-  const handleDelete = async id => {
+  const handleDelete = async (id) => {
     const a = await props.deleteBlog(id);
     if (!a.error) {
       fetch();
@@ -35,7 +35,7 @@ const Blogs = props => {
     }
   };
 
-  const handleEdit = record => {
+  const handleEdit = (record) => {
     setvisible(true);
     setId(record.id);
     setData(record);
@@ -47,7 +47,7 @@ const Blogs = props => {
 
   return (
     <>
-      <Button style={{ marginBottom: 10 }} type='primary' onClick={showDrawer}>
+      <Button style={{ marginBottom: 10 }} type="primary" onClick={showDrawer}>
         <PlusOutlined /> Add Blog
       </Button>
       <Space></Space>
@@ -57,7 +57,7 @@ const Blogs = props => {
         handleDelete={handleDelete}
       />
       <Drawer
-        title={id ? 'Edit Blog' : 'Add Blog'}
+        title={id ? "Edit Blog" : "Add Blog"}
         width={700}
         onClose={onClose}
         destroyOnClose
@@ -66,7 +66,7 @@ const Blogs = props => {
         footer={
           <div
             style={{
-              textAlign: 'center',
+              textAlign: "center",
             }}
           >
             <Button onClick={onClose} style={{ marginRight: 8 }}>
@@ -75,7 +75,7 @@ const Blogs = props => {
             <Button
               disabled={submitting}
               onClick={() => setclicked(Math.random())}
-              type='primary'
+              type="primary"
             >
               Submit
             </Button>
@@ -99,35 +99,36 @@ const Blogs = props => {
 };
 
 const mapStoreToProps = ({ Blogs }) => {
-  console.log('state', Blogs);
+  console.log("state", Blogs);
   return {
     blogs: Blogs.payload,
   };
 };
-const mapDispatchToProps = dispatch => ({
-  fetchBlogs: param =>
+
+const mapDispatchToProps = (dispatch) => ({
+  fetchBlogs: (param) =>
     dispatch(
       actionCreator({
-        method: 'GET',
-        action_type: 'FETCH_BLOG',
+        method: "GET",
+        action_type: "FETCH_BLOG",
         param,
-      }),
+      })
     ),
-  createBlog: values =>
+  createBlog: (values) =>
     dispatch(
-      actionCreator({ method: 'POST', action_type: 'CREATE_BLOG', values }),
+      actionCreator({ method: "POST", action_type: "CREATE_BLOG", values })
     ),
   editBlog: (id, values) =>
     dispatch(
-      actionCreator({ method: 'PATCH', id, action_type: 'EDIT_BLOG', values }),
+      actionCreator({ method: "PATCH", id, action_type: "EDIT_BLOG", values })
     ),
-  deleteBlog: id =>
+  deleteBlog: (id) =>
     dispatch(
       actionCreator({
-        method: 'DELETE',
+        method: "DELETE",
         id,
-        action_type: 'DELETE_BLOG',
-      }),
+        action_type: "DELETE_BLOG",
+      })
     ),
 });
 
