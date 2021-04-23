@@ -3,6 +3,7 @@ import "antd/dist/antd.css";
 import { Layout, Menu, Input, Dropdown, Row, Col } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 import imgOne from "../../images/logo192.png";
+import {Link} from 'react-router-dom';
 
 const { Search } = Input;
 const { Header, Sider, Content, Footer } = Layout;
@@ -11,9 +12,9 @@ const { SubMenu } = Menu;
 const menu = (
   <Menu>
     <Menu.Item>
-      <a target="_blank" rel="noopener noreferrer" href="/">
+     <Link to='/logout'>
         Logout
-      </a>
+    </Link>
     </Menu.Item>
   </Menu>
 );
@@ -66,7 +67,7 @@ class DashboardTopNav extends React.Component {
                 className="ant-dropdown-link"
                 onClick={(e) => e.preventDefault()}
               >
-                Admin <DownOutlined />
+                {localStorage.getItem('name')?.split(' ')[0]?.toUpperCase() || ''} <DownOutlined />
               </a>
             </Dropdown>
           </Menu.Item>

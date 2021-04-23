@@ -53,7 +53,7 @@ export const UserTable = props => {
       title: 'Usertype',
       dataIndex: 'isAdmin',
       key: 'isAdmin',
-      render: text => <span>{text === true ? 'ADMIN' : 'USER'}</span>,
+      render: text => <span>{text && text === true ? 'ADMIN' : 'USER'}</span>,
     },
     {
       title: 'Action',

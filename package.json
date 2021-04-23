@@ -50,7 +50,7 @@
       "react-app/jest"
     ]
   },
-  "proxy": "http://5afae1c390bf.ngrok.io",
+  "proxy": "http://localhost:3050",
   "browserslist": {
     "production": [
       ">0.2%",

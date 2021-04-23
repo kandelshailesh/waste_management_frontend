@@ -1,5 +1,5 @@
 export const backend_api = {
-  LOGIN: '/api/backend/v1/user/login',
+  USER_LOGIN: '/api/backend/v1/user/login',
   CREATE_USER: '/api/backend/v1/user/signup',
   FETCH_USERS: '/api/backend/v1/users',
   FETCH_USER_BY_ID: '/api/backend/v1/user',

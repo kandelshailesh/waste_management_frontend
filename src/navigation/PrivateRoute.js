@@ -5,6 +5,9 @@ import Header from 'pages/header';
 import { message, notification } from 'antd';
 import { connect } from 'react-redux';
 import { actionCreator } from '../reducers/actionCreator';
+import Dashboard_Content from '../pages';
+import { Row, Col } from 'antd';
+import DashboardSider from '../pages/sidebar';
 
 const PrivateRoute = props => {
   const {
@@ -18,35 +21,8 @@ const PrivateRoute = props => {
   const [scroll, setscroll] = useState(0);
   const [access, set_access] = useState(false);
   const [message, set_message] = useState('');
+  const [width, setWidth] = useState(4);
 
-  const check = async () => {
-    try {
-      const { hospitalId } = JSON.parse(localStorage.getItem('user_data'));
-      if (hospitalId) {
-        const a = await props.checkStatus(hospitalId);
-        if (a.error) {
-          set_access(true);
-        } else {
-          set_access(false);
-          set_message(a.message);
-        }
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  useEffect(() => {
-    check();
-  }, []);
-  useEffect(() => {
-    window.scrollTo({
-      top: 80,
-      left: 100,
-      behavior: 'smooth',
-    });
-  }, [scroll]);
-  //   alert(path);
 
   if (set_access) {
     return (
@@ -63,13 +39,24 @@ const PrivateRoute = props => {
                 style={{
                   width: '100%',
                   overflowX: 'hidden',
+                  display: 'flex',
+                  flexDirection: 'column',
                 }}
               >
-                <Header {...props} />
-                <div>
-                  <Component {...props} />
-                </div>
-                <Footer setscroll={setscroll} />
+                <Row>
+                  <Col span={24}>
+                    <Header />
+                  </Col>
+                  <Col span={width}>
+                    <DashboardSider setWidth={setWidth} width={width} />
+                  </Col>
+                  <Col span={24 - width}>
+                    <Dashboard_Content>
+                      <Component {...props} />
+                    </Dashboard_Content>
+                    {/* <Footer /> */}
+                  </Col>
+                </Row>
               </div>
             );
           } else {
@@ -99,15 +86,6 @@ const PrivateRoute = props => {
 const mapStoreToProps = () => {
   return {};
 };
-const mapDispatchToProps = dispatch => ({
-  checkStatus: id =>
-    dispatch(
-      actionCreator({
-        method: 'GET',
-        action_type: 'CHECK_HOSPITAL_STATUS',
-        id,
-      }),
-    ),
-});
+const mapDispatchToProps = dispatch => ({});
 
 export default connect(mapStoreToProps, mapDispatchToProps)(PrivateRoute);

@@ -1,102 +1,116 @@
-import React, { useRef, useState } from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import { PatientCreationSchema } from "_utils/Schemas";
-import { TextField } from "formik-material-ui";
-import { message, Button, Row, Col } from "antd";
-import { PoweroffOutlined } from "@ant-design/icons";
-import { LoginSchema } from "../../_utils/Schemas";
-import { store } from "../../reducers/configureStore";
-
-import { connect } from "react-redux";
-import { actionCreator } from "../../reducers/actionCreator";
-import { Redirect } from "react-router";
-const FossilMdLoginPage = (props) => {
+import React, { useRef, useState } from 'react';
+import { LoginSchema } from '../../_utils/Schemas';
+import { store } from '../../reducers/configureStore';
+import { connect } from 'react-redux';
+import { actionCreator } from '../../reducers/actionCreator';
+import { Form, Input, Button, Checkbox,message } from 'antd';
+import { Redirect } from 'react-router';
+import { UserOutlined, LockOutlined } from '@ant-design/icons';
+const FossilMdLoginPage = props => {
   const [loadings, setLoadings] = useState(false);
 
-  const handleFormSubmission = async (values, { setSubmitting }) => {
+  const handleFormSubmission = async values => {
     //Handle submission goes here
-    setSubmitting(true);
     setLoadings(true);
-    await props.userLogin(JSON.stringify(values));
-    setSubmitting(false);
-    setLoadings(false);
+   const response= await props.userLogin(JSON.stringify(values));
+    if (response.type === 'FETCH_ERROR') {
+       setLoadings(false);
+       message.error(response.message);
+    } else {
+       setLoadings(false);
+    }
+  
   };
-  const innerForm = useRef();
 
   if (props.isLogin) {
-    return <Redirect to="/users"></Redirect>;
+    return <Redirect to='/users'></Redirect>;
   } else {
     return (
-      <div className="loginWrapper">
-        <div className="login-page">
-          <Formik
-            enableReinitialize={true}
-            initialValues={{
-              email: "",
-              password: "",
-            }}
-            validationSchema={LoginSchema}
-            onSubmit={handleFormSubmission}
-            innerRef={innerForm}
+      <Form
+        name='normal_login'
+        className='login-form'
+        style={{
+          border: '2px solid #eee',
+          padding: '80px 50px 30px 50px',
+          borderRadius: 5,
+          marginTop:10,
+          background:'white'
+        }}
+        initialValues={{
+          remember: true,
+        }}
+        onFinish={handleFormSubmission}
+        scrollToFirstError
+      >
+        <Form.Item
+          name='email'
+          rules={[
+            {
+              required: true,
+              message: 'Email is required',
+            },
+            {
+              type: 'email',
+              message: 'Enter valid email',
+            },
+          ]}
+        >
+          <Input
+            prefix={<UserOutlined className='site-form-item-icon' />}
+            placeholder='Email'
+          />
+        </Form.Item>
+        <Form.Item
+          name='password'
+          rules={[
+            {
+              required: true,
+              message: 'Password is required',
+            },
+          ]}
+        >
+          <Input
+            prefix={<LockOutlined className='site-form-item-icon' />}
+            type='password'
+            placeholder='Password'
+          />
+        </Form.Item>
+        <Form.Item>
+          <Form.Item name='remember' valuePropName='checked' noStyle>
+            <Checkbox>Remember me</Checkbox>
+          </Form.Item>
+        </Form.Item>
+
+        <Form.Item>
+          <Button
+            type='primary'
+            htmlType='submit'
+            className='login-form-button'
+                        loading={loadings}
           >
-            {({ isSubmitting, handleSubmit }) => (
-              <Form className="login__form" onSubmit={handleSubmit}>
-                <h2 className="text-center">Log in to continue..</h2>
-                <div className="loginInput">
-                  <Field
-                    label="Email"
-                    disabled={false}
-                    component={TextField}
-                    name="email"
-                    placeholder=""
-                    type="text"
-                  ></Field>
-                </div>
-
-                <Field
-                  style={{ width: "100%" }}
-                  label="Password"
-                  component={TextField}
-                  name="password"
-                  placeholder=""
-                  type="password"
-                  disabled={false}
-                ></Field>
-
-                <div className="text-center">
-                  <button
-                    htmlType="submit"
-                    //disabled={isSubmitting}
-                    loading={loadings}
-                    className="view-button button-square mt8"
-                  >
-                    Login
-                  </button>
-                </div>
-              </Form>
-            )}
-          </Formik>
-        </div>
-      </div>
+            Log in
+          </Button>
+        </Form.Item>
+      </Form>
     );
   }
 };
 
-const mapStoreToProps = (store) => {
+const mapStoreToProps = store => {
   return {
     isLogin: store.Login.isLogin,
   };
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  userLogin: (values) =>
+const mapDispatchToProps = dispatch => ({
+  userLogin: values =>
     dispatch(
       actionCreator({
-        method: "POST",
-        contentType: "JSON",
-        action_type: "USER_LOGIN",
+        method: 'POST',
+        contentType: 'JSON',
+        action_type: 'USER_LOGIN',
         values,
-      })
+      }),
     ),
 });
 

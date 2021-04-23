@@ -59,19 +59,11 @@ export const actionCreator = result => {
       const response = await callApi(url, config);
       if (response.success) {
         if (result.action_type === 'USER_LOGIN') {
-          if (response.user.userTypeId == 2) {
-            return dispatch({
-              type: result.action_type,
-              payload: { user: response.user, token: response.token },
-              error: '',
-            });
-          } else {
-            return dispatch({
-              type: 'FETCH_ERROR',
-              error: true,
-              message: 'This is the login portal of hospital',
-            });
-          }
+          return dispatch({
+            type: result.action_type,
+            payload: { data: response.data, token: response.token },
+            error: '',
+          });
         } else {
           return dispatch({
             type: result.action_type,
@@ -83,7 +75,7 @@ export const actionCreator = result => {
         return dispatch({
           type: 'FETCH_ERROR',
           error: true,
-          message: response.error,
+          message: 'This is the admin login portal of fohor maila',
         });
       }
     } catch (err) {

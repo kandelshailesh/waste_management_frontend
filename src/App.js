@@ -8,6 +8,7 @@ import 'antd/dist/antd.css';
 import './styles/index.css';
 
 import Router from './navigation/Router';
+import { ValidateToken } from './_utils/validatetoken';
 
 if (process.env.NODE_ENV === 'production') {
   console.log = () => {};
@@ -18,7 +19,25 @@ if (process.env.NODE_ENV === 'production') {
 export const Foodcan = React.createContext();
 
 const App = () => {
-  const [loading, setloading] = useState(false);
+  const [loading, setloading] = useState(true);
+
+  useEffect(() => {
+    const validate = async () => {
+      try {
+        const result = await ValidateToken();
+        if (result[0]) {
+          store.dispatch({ type: 'LOGIN_VERIFIED' });
+          setloading(false);
+        } else {
+          store.dispatch({ type: 'LOGIN_EXPIRED' });
+          setloading(false);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    validate();
+  }, []);
 
   if (loading) {
     return (
