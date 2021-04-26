@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import 'antd/dist/antd.css';
 import { connect } from 'react-redux';
 import { actionCreator } from '../../reducers/actionCreator';
-import { Drawer, Button, Space, notification, message } from 'antd';
+import { Drawer, Button, Space, notification, message, Input } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { STRINGS } from '_constants';
 import { UserTable } from './table';
@@ -15,6 +15,7 @@ const Users = props => {
   const [clicked, setclicked] = useState(false);
   const [data, setData] = useState('');
   const [id, setId] = useState('');
+  const [filterTable, setFilterTable] = useState(null);
   const showDrawer = () => {
     setvisible(true);
   };
@@ -45,14 +46,41 @@ const Users = props => {
     if (!visible) fetch();
   }, [visible]);
 
+  const search = value => {
+    console.log('PASS', { value });
+
+    const result = props.users.filter(o =>
+      Object.keys(o).some(k =>
+        String(o[k]).toLowerCase().includes(value.toLowerCase()),
+      ),
+    );
+    console.log(result);
+    setFilterTable(result);
+  };
+
   return (
     <>
-      <Button style={{ marginBottom: 10 }} type='primary' onClick={showDrawer}>
-        <PlusOutlined /> Add User
-      </Button>
+      <Space>
+        <Button
+          style={{ marginBottom: 10 }}
+          type='primary'
+          onClick={showDrawer}
+        >
+          <PlusOutlined /> Add User
+        </Button>
+        <Input.Search
+          style={{
+            width: '400px',
+            margin: '0 0 10px 0',
+          }}
+          placeholder='Search by...'
+          enterButton
+          onSearch={search}
+        />
+      </Space>
       <Space></Space>
       <UserTable
-        userData={props.users}
+        userData={filterTable == null ? props.users : filterTable}
         handleEdit={handleEdit}
         handleDelete={handleDelete}
       />
