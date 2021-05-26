@@ -2,9 +2,12 @@ import React from 'react';
 import { Button, Table, Space, Tooltip, Popconfirm } from 'antd';
 import { DeleteFilled, EditFilled } from '@ant-design/icons';
 import moment from 'moment';
+import { SkeletonTable } from 'components/TableSkeleton';
 
 export const ScheduleTable = props => {
   console.log('Schedule table');
+  const { loading } = props;
+
   const columns = [
     {
       title: 'S.N',
@@ -79,6 +82,9 @@ export const ScheduleTable = props => {
       ),
     },
   ];
+  if (loading) {
+    return <SkeletonTable columns={columns} />;
+  }
 
   return (
     <Table

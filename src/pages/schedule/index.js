@@ -13,6 +13,8 @@ const Schedule = props => {
   const [visible, setvisible] = useState(false);
   const [submitting, setsubmitting] = useState(false);
   const [clicked, setclicked] = useState(false);
+  const [loading, setLoading] = useState(true);
+
   const [data, setData] = useState('');
   const [id, setId] = useState('');
   const showDrawer = () => {
@@ -26,6 +28,7 @@ const Schedule = props => {
   const fetch = async () => {
     await props.fetchSchedules();
     await props.fetchUsers({ isAdmin: '0' });
+    setLoading(false);
   };
   const handleDelete = async id => {
     const a = await props.deleteSchedule(id);
@@ -56,6 +59,7 @@ const Schedule = props => {
         userData={props.schedules}
         handleEdit={handleEdit}
         handleDelete={handleDelete}
+        loading={loading}
       />
       <Drawer
         title={id ? `Edit ${title}` : `Add ${title}`}

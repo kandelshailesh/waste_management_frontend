@@ -8,6 +8,8 @@ import { ScheduleReducer as Schedules } from './ComponentReducer/schedules';
 import { SubscriptionReducer as Subscriptions } from './ComponentReducer/subscriptions';
 import { CollectionRequestReducer as CollectionRequests } from './ComponentReducer/collection_request';
 import { LoginReducer as Login } from './ComponentReducer/login';
+import { PackageSubscriptionReducer as PackageSubscriptions } from './ComponentReducer/package_subscriptions';
+import { TransactionReducer as Transaction } from './ComponentReducer/transaction';
 
 export const reducers = {
   Users,
@@ -20,4 +22,6 @@ export const reducers = {
   Subscriptions,
   CollectionRequests,
   Login,
+  PackageSubscriptions,
+  Transaction,
 };

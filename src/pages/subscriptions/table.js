@@ -3,8 +3,12 @@ import { Button, Table, Space, Tooltip, Popconfirm } from 'antd';
 import { DeleteFilled, EditFilled } from '@ant-design/icons';
 import moment from 'moment';
 
+import { SkeletonTable } from 'components/TableSkeleton';
+
 export const SubscriptionTable = props => {
   console.log('Subscription table');
+  const { loading } = props;
+
   const columns = [
     {
       title: 'S.N',
@@ -91,6 +95,9 @@ export const SubscriptionTable = props => {
       ),
     },
   ];
+  if (loading) {
+    return <SkeletonTable columns={columns} />;
+  }
 
   return (
     <Table

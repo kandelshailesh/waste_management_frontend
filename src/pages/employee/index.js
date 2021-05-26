@@ -1,37 +1,40 @@
-import React, { useState, useEffect } from "react";
-import "antd/dist/antd.css";
-import { connect } from "react-redux";
-import { actionCreator } from "../../reducers/actionCreator";
-import { Drawer, Button, Space, notification, message } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
-import { STRINGS } from "_constants";
-import { EmployeeTable } from "./table";
-import { EmployeeForm } from "./form";
+import React, { useState, useEffect } from 'react';
+import 'antd/dist/antd.css';
+import { connect } from 'react-redux';
+import { actionCreator } from '../../reducers/actionCreator';
+import { Drawer, Button, Space, notification, message } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
+import { STRINGS } from '_constants';
+import { EmployeeTable } from './table';
+import { EmployeeForm } from './form';
 
-const Employee = (props) => {
-  const title = "Employee";
+const Employee = props => {
+  const title = 'Employee';
   const [visible, setvisible] = useState(false);
   const [submitting, setsubmitting] = useState(false);
   const [clicked, setclicked] = useState(false);
-  const [data, setData] = useState("");
-  const [id, setId] = useState("");
+  const [data, setData] = useState('');
+  const [id, setId] = useState('');
+  const [loading, setLoading] = useState(true);
+
   const showDrawer = () => {
     setvisible(true);
   };
   const onClose = () => {
     setvisible(false);
-    setId("");
-    setData("");
+    setId('');
+    setData('');
   };
   const fetch = async () => {
     await props.fetchEmployees();
+    setLoading(false);
   };
-  const handleDelete = async (id) => {
+  const handleDelete = async id => {
     const a = await props.deleteEmployee(id);
     if (!a.error) {
       notification.success({
         message: STRINGS.success,
-        description: "Delete successfully",
+        description: 'Delete successfully',
       });
       fetch();
     } else {
@@ -39,7 +42,7 @@ const Employee = (props) => {
     }
   };
 
-  const handleEdit = (record) => {
+  const handleEdit = record => {
     setvisible(true);
     setId(record.id);
     setData(record);
@@ -51,7 +54,7 @@ const Employee = (props) => {
 
   return (
     <>
-      <Button style={{ marginBottom: 10 }} type="primary" onClick={showDrawer}>
+      <Button style={{ marginBottom: 10 }} type='primary' onClick={showDrawer}>
         <PlusOutlined /> Add {title}
       </Button>
       <Space></Space>
@@ -59,6 +62,7 @@ const Employee = (props) => {
         userData={props.employee}
         handleEdit={handleEdit}
         handleDelete={handleDelete}
+        loading={loading}
       />
       <Drawer
         title={id ? `Edit ${title}` : `Add ${title}`}
@@ -69,7 +73,7 @@ const Employee = (props) => {
         footer={
           <div
             style={{
-              textAlign: "center",
+              textAlign: 'center',
             }}
           >
             <Button onClick={onClose} style={{ marginRight: 8 }}>
@@ -78,7 +82,7 @@ const Employee = (props) => {
             <Button
               disabled={submitting}
               onClick={() => setclicked(Math.random())}
-              type="primary"
+              type='primary'
             >
               Submit
             </Button>
@@ -102,47 +106,47 @@ const Employee = (props) => {
 };
 
 const mapStoreToProps = ({ Employee }) => {
-  console.log("state", Employee);
+  console.log('state', Employee);
   return {
     employee: Employee.payload,
   };
 };
-const mapDispatchToProps = (dispatch) => ({
-  fetchEmployees: (param) =>
+const mapDispatchToProps = dispatch => ({
+  fetchEmployees: param =>
     dispatch(
       actionCreator({
-        method: "GET",
-        action_type: "FETCH_EMPLOYEE",
+        method: 'GET',
+        action_type: 'FETCH_EMPLOYEE',
         param,
-      })
+      }),
     ),
-  createEmployee: (values) =>
+  createEmployee: values =>
     dispatch(
       actionCreator({
-        method: "POST",
-        contentType: "JSON",
-        action_type: "CREATE_EMPLOYEE",
+        method: 'POST',
+        contentType: 'JSON',
+        action_type: 'CREATE_EMPLOYEE',
         values,
-      })
+      }),
     ),
   editEmployee: (id, values) =>
     dispatch(
       actionCreator({
-        method: "PATCH",
+        method: 'PATCH',
         id,
-        action_type: "EDIT_EMPLOYEE",
-        contentType: "JSON",
+        action_type: 'EDIT_EMPLOYEE',
+        contentType: 'JSON',
 
         values,
-      })
+      }),
     ),
-  deleteEmployee: (id) =>
+  deleteEmployee: id =>
     dispatch(
       actionCreator({
-        method: "DELETE",
+        method: 'DELETE',
         id,
-        action_type: "DELETE_EMPLOYEE",
-      })
+        action_type: 'DELETE_EMPLOYEE',
+      }),
     ),
 });
 

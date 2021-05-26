@@ -30,6 +30,12 @@ const routes = [
     authorize: true,
   },
   {
+    path: '/dashboard',
+    component: loadable(() => import('../pages/dashboard')),
+    exact: true,
+    authorize: true,
+  },
+  {
     path: '/events',
     component: loadable(() => import('../pages/events')),
     exact: true,
@@ -77,7 +83,13 @@ const routes = [
     exact: true,
     authorize: true,
   },
-    {
+  {
+    path: '/transactions',
+    component: loadable(() => import('../pages/transactions')),
+    exact: true,
+    authorize: true,
+  },
+  {
     path: '/logout',
     component: loadable(() => import('../pages/Logout')),
     exact: true,

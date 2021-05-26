@@ -13,6 +13,8 @@ const Event = props => {
   const [visible, setvisible] = useState(false);
   const [submitting, setsubmitting] = useState(false);
   const [clicked, setclicked] = useState(false);
+  const [loading, setLoading] = useState(true);
+
   const [data, setData] = useState('');
   const [id, setId] = useState('');
   const showDrawer = () => {
@@ -25,6 +27,7 @@ const Event = props => {
   };
   const fetch = async () => {
     await props.fetchEvents();
+    setLoading(false);
   };
   const handleDelete = async id => {
     const a = await props.deleteEvent(id);
@@ -54,6 +57,7 @@ const Event = props => {
       <EventTable
         userData={props.event}
         handleEdit={handleEdit}
+        loading={loading}
         handleDelete={handleDelete}
       />
       <Drawer

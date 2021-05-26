@@ -1,9 +1,12 @@
 import React from 'react';
 import { Button, Table, Space, Tooltip, Popconfirm } from 'antd';
 import { DeleteFilled, EditFilled } from '@ant-design/icons';
+import { SkeletonTable } from 'components/TableSkeleton';
 
 export const EmployeeTable = props => {
   console.log('Employee table');
+
+  const { loading } = props;
   const columns = [
     {
       title: 'S.N',
@@ -90,6 +93,10 @@ export const EmployeeTable = props => {
       ),
     },
   ];
+
+  if (loading) {
+    return <SkeletonTable columns={columns} />;
+  }
 
   return (
     <Table

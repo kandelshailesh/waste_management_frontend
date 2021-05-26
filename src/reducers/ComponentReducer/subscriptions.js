@@ -25,6 +25,14 @@ export const SubscriptionReducer = (state = SubscriptionState, action) => {
         message: action.message,
         changed: false,
       };
+    case 'FETCH_SUBSCRIPTION_BY_PACKAGE':
+      return {
+        ...state,
+        error: action.error,
+        payload: action.payload,
+        message: action.message,
+        changed: false,
+      };
     case 'EDIT_SUBSCRIPTION':
       message.success('SUBSCRIPTION EDITED SUCCESSFULLY');
       return {

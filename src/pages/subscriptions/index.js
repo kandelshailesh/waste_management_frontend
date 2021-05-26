@@ -13,6 +13,8 @@ const Subscription = props => {
   const [visible, setvisible] = useState(false);
   const [submitting, setsubmitting] = useState(false);
   const [clicked, setclicked] = useState(false);
+  const [loading, setLoading] = useState(true);
+
   const [data, setData] = useState('');
   const [id, setId] = useState('');
   const showDrawer = () => {
@@ -27,6 +29,7 @@ const Subscription = props => {
     await props.fetchSubscriptions();
     await props.fetchUsers({ isAdmin: '0', subscribed: '0' });
     await props.fetchPackages();
+    setLoading(false);
   };
   const handleDelete = async id => {
     const a = await props.deleteSubscription(id);
@@ -57,6 +60,7 @@ const Subscription = props => {
         userData={props.subscriptions}
         handleEdit={handleEdit}
         handleDelete={handleDelete}
+        loading={loading}
       />
       <Drawer
         title={id ? `Edit ${title}` : `Add ${title}`}

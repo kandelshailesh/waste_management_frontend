@@ -15,6 +15,8 @@ const Complaint = props => {
   const [clicked, setclicked] = useState(false);
   const [data, setData] = useState('');
   const [id, setId] = useState('');
+  const [loading, setLoading] = useState(true);
+
   const showDrawer = () => {
     setvisible(true);
   };
@@ -26,6 +28,7 @@ const Complaint = props => {
   const fetch = async () => {
     await props.fetchComplaints();
     await props.fetchUsers({ isAdmin: '0' });
+    setLoading(false);
   };
   const handleDelete = async id => {
     const a = await props.deleteComplaint(id);
@@ -56,6 +59,7 @@ const Complaint = props => {
         userData={props.complaints}
         handleEdit={handleEdit}
         handleDelete={handleDelete}
+        loading={loading}
       />
       <Drawer
         title={id ? `Edit ${title}` : `Add ${title}`}

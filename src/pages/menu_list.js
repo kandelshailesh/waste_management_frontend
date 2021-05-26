@@ -16,17 +16,16 @@ import {
 } from '@ant-design/icons';
 
 export const menu_list = [
-  // {
-  //   key: 1,
-  //   icon: <PieChartOutlined />,
-  //   component: 'PieChartOne',
-  //   label: 'Dashboard',
-  //   type: 'menu',
-
-  //   path: '/dashboard',
-  //   wologin: true,
-  //   wlogin: true,
-  // },
+  {
+    key: 1,
+    icon: <PieChartOutlined />,
+    component: 'PieChartOne',
+    label: 'Dashboard',
+    type: 'menu',
+    path: '/dashboard',
+    wologin: false,
+    wlogin: true,
+  },
   {
     key: 2,
     icon: <UserOutlined />,
@@ -34,7 +33,7 @@ export const menu_list = [
     label: 'Users',
     type: 'menu',
     path: '/users',
-    wologin: true,
+    wologin: false,
     wlogin: true,
   },
   {
@@ -44,7 +43,7 @@ export const menu_list = [
     label: 'Employees',
     type: 'menu',
     path: '/employees',
-    wologin: true,
+    wologin: false,
     wlogin: true,
   },
   {
@@ -54,7 +53,7 @@ export const menu_list = [
     label: 'Events',
     type: 'menu',
     path: '/events',
-    wologin: true,
+    wologin: false,
     wlogin: true,
   },
   {
@@ -64,7 +63,7 @@ export const menu_list = [
     label: 'Packages',
     type: 'menu',
     path: '/packages',
-    wologin: true,
+    wologin: false,
     wlogin: true,
   },
   {
@@ -74,7 +73,7 @@ export const menu_list = [
     label: 'Blogs',
     type: 'menu',
     path: '/blogs',
-    wologin: true,
+    wologin: false,
     wlogin: true,
   },
 
@@ -85,7 +84,7 @@ export const menu_list = [
     label: 'Complaints',
     type: 'menu',
     path: '/complaints',
-    wologin: true,
+    wologin: false,
     wlogin: true,
   },
   {
@@ -94,7 +93,7 @@ export const menu_list = [
     label: 'Schedule',
     type: 'menu',
     path: '/schedules',
-    wologin: true,
+    wologin: false,
     wlogin: true,
   },
   {
@@ -103,7 +102,7 @@ export const menu_list = [
     label: 'Collection Request',
     type: 'menu',
     path: '/collection_request',
-    wologin: true,
+    wologin: false,
     wlogin: true,
   },
   {
@@ -112,7 +111,16 @@ export const menu_list = [
     label: 'Subscriptions',
     type: 'menu',
     path: '/subscriptions',
-    wologin: true,
+    wologin: false,
+    wlogin: true,
+  },
+  {
+    key: 12,
+    icon: <RocketOutlined />,
+    label: 'Transactions',
+    type: 'menu',
+    path: '/transactions',
+    wologin: false,
     wlogin: true,
   },
 ];

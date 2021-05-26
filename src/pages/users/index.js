@@ -10,12 +10,12 @@ import { UserForm } from './form';
 
 const Users = props => {
   const [visible, setvisible] = useState(false);
-
   const [submitting, setsubmitting] = useState(false);
   const [clicked, setclicked] = useState(false);
   const [data, setData] = useState('');
   const [id, setId] = useState('');
   const [filterTable, setFilterTable] = useState(null);
+  const [loading, setLoading] = useState(true);
   const showDrawer = () => {
     setvisible(true);
   };
@@ -25,7 +25,8 @@ const Users = props => {
     setData('');
   };
   const fetch = async () => {
-    await props.fetchUsers();
+    const data = await props.fetchUsers();
+    setLoading(false);
   };
   const handleDelete = async id => {
     const a = await props.deleteUser(id);
@@ -83,6 +84,7 @@ const Users = props => {
         userData={filterTable == null ? props.users : filterTable}
         handleEdit={handleEdit}
         handleDelete={handleDelete}
+        loading={loading}
       />
       <Drawer
         title={id ? 'Edit User' : 'Add User'}

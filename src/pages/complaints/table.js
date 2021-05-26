@@ -2,9 +2,12 @@ import React from 'react';
 import { Button, Table, Space, Tooltip, Popconfirm } from 'antd';
 import { DeleteFilled, EditFilled } from '@ant-design/icons';
 import moment from 'moment';
+import { SkeletonTable } from 'components/TableSkeleton';
 
 export const ComplaintTable = props => {
   console.log('Complaint table');
+
+  const { loading } = props;
   const columns = [
     {
       title: 'S.N',
@@ -34,9 +37,20 @@ export const ComplaintTable = props => {
     },
     {
       title: 'Location',
-      dataIndex: 'location',
       key: 'location',
       // render: (text) => <span>{text === null ? '-' : text}</span>,
+      render: record => (
+        <span>
+          {record.location}
+          &nbsp;
+          <a
+            target='_blank'
+            href={`https://www.google.com/maps/@${record.lat},${record.lng}}`}
+          >
+            See in Map
+          </a>
+        </span>
+      ),
     },
     {
       title: 'Status',
@@ -84,6 +98,9 @@ export const ComplaintTable = props => {
       ),
     },
   ];
+  if (loading) {
+    return <SkeletonTable columns={columns} />;
+  }
 
   return (
     <Table

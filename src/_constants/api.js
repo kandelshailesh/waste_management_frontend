@@ -37,4 +37,6 @@ export const backend_api = {
   EDIT_COLLECTION_REQUEST: '/api/backend/v1/collection_request',
   DELETE_COLLECTION_REQUEST: '/api/backend/v1/collection_request',
   FETCH_COLLECTION_REQUEST: '/api/backend/v1/collection_request',
+  FETCH_SUBSCRIPTION_BY_PACKAGE: '/api/backend/v1/subscription/package',
+  FETCH_TRANSACTION: '/api/backend/v1/transaction',
 };
